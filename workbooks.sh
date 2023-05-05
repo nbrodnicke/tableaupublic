@@ -19,17 +19,27 @@ WORKBOOK_URLS=(
 "https://public.tableau.com/workbooks/Venn_0.twb"
 )
 
-for url in "${WORKBOOK_URLS[@]}"; do
-  FILE=$(echo "$url" | awk -F '/' '{print $5x}')
-  DIR=$(basename "$FILE" .twbx)
-  mkdir -p "$DIR"
-  cd "$DIR" || exit
+for URL in "${WORKBOOK_URLS[@]}"; do
+  FILE=$(echo "$URL" | awk -F '/' '{print $5}')
+  FILE="${FILE}x"
+  DIR=$(basename -- "$FILE" .twbx)
+  mkdir -p -- "$DIR"
+  cd -- "$DIR" || exit
 
+  # Download the workbook
   curl -l "$URL" -o "$FILE"
+
+  # Extract the .hyper files
+  unzip -d tmp -- "$FILE"
+  find tmp -type f -name '*.hyper' -exec mv {} . \;
+  find tmp -type f -name '*.tde' -exec mv {} . \;
+  rm -rf tmp
+
+  # Extract the query log
   open "$FILE"
-
   read -n 1 -s -r -p "Please open all tabs in the tableau GUI to execute the queries"
-
   mv "$HOME/Documents/My Tableau Repository/Logs/hyperd.log" .
+  #rm -f "$FILE"
+
   cd ..
 done

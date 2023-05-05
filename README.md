@@ -24,9 +24,9 @@ sudo mv "/Applications/Tableau Public.app/Contents/MacOS/hyper/hyperd" \
 sudo cp hyperd "/Applications/Tableau Public.app/Contents/MacOS/hyper/"
 ```
 
-## Extracting
+## Extracting Data and Queries
 
 To extract the queries from a workbook, open it in the Tableau GUI and click through all tabs.
-Then run `extractQueries.sh WORKBOOK_NAME` to extract the queries and the data tables.
-
 The `workbooks.sh` automates this for some interesting public workbooks.
+
+Then, use the python scripts to convert the Tableau data files to CSVs and dump the schema.
