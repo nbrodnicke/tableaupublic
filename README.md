@@ -14,6 +14,11 @@ brew install postgresql@15
 brew install jq
 ```
 
+Install python hyper API for conversion scripts:
+```shell
+pip install --user tableauhyperapi
+```
+
 Install our hyperd wrapper.  
 This overwrites the hyperd command line arguments to allow data access without specifying the password.
 This is insecure in the general case, but for public workbooks that should be fine.
@@ -30,3 +35,19 @@ To extract the queries from a workbook, open it in the Tableau GUI and click thr
 The `workbooks.sh` automates this for some interesting public workbooks.
 
 Then, use the python scripts to convert the Tableau data files to CSVs and dump the schema.
+
+Load into umbra:
+```sql
+create schema "Extract";
+-- create the table with the schema
+\i ahlyAfrica/excel_direct_42363_552682708300.sql
+-- and load the csv data
+copy "Extract"."Extract" from 'ahlyAfrica/excel_direct_42363_552682708300.csv' delimiter '|' null '';
+```
+
+
+## Licenses
+
+Original [public_bi_benchmark](https://github.com/cwida/public_bi_benchmark) by CWI Data Architectures Group.
+[Tableau API](https://github.com/tableau/hyper-api-samples) by Tableau.
+Everything licensed user MIT.
