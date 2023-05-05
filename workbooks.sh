@@ -20,11 +20,16 @@ WORKBOOK_URLS=(
 )
 
 for url in "${WORKBOOK_URLS[@]}"; do
-  FILE=$(echo "$url" | awk -F '/' '{print $5}')
+  FILE=$(echo "$url" | awk -F '/' '{print $5x}')
+  DIR=$(basename "$FILE" .twbx)
+  mkdir -p "$DIR"
+  cd "$DIR" || exit
+
   curl -l "$URL" -o "$FILE"
   open "$FILE"
 
   read -n 1 -s -r -p "Please open all tabs in the tableau GUI to execute the queries"
 
-  ./extractQueries.sh "$FILE"
+  mv "$HOME/Documents/My Tableau Repository/Logs/hyperd.log" .
+  cd ..
 done
