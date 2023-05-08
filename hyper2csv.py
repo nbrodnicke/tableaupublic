@@ -10,6 +10,8 @@ def fix_column_type(column_type: str):
         return 'BIGINT'
     if str(column_type) == 'DOUBLE':
         return 'DOUBLE PRECISION'
+    if str(column_type) == 'SMALL_INT':
+        return 'SMALLINT'
     return column_type
 
 
