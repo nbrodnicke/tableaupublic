@@ -10,7 +10,6 @@ http://public.tableau.com/s/download
 
 Install jq to parse the log files postgres to extract the CSV data:
 ```shell
-brew install postgresql@15
 brew install jq
 ```
 
@@ -19,24 +18,14 @@ Install python hyper API for conversion scripts:
 pip install --user tableauhyperapi
 ```
 
-Install our hyperd wrapper.  
-This overwrites the hyperd command line arguments to allow data access without specifying the password.
-This is insecure in the general case, but for public workbooks that should be fine.
-
-```shell
-sudo mv "/Applications/Tableau Public.app/Contents/MacOS/hyper/hyperd" \
-        "/Applications/Tableau Public.app/Contents/MacOS/hyper/hyperd.original"
-sudo cp hyperd "/Applications/Tableau Public.app/Contents/MacOS/hyper/"
-```
-
 ## Extracting Data and Queries
 
 To extract the queries from a workbook, open it in the Tableau GUI and click through all tabs.
 The `workbooks.sh` automates this for some interesting public workbooks.
 
-Then, use the python scripts to convert the Tableau data files to CSVs and dump the schema.
+Then, use the `convert.sh` script to convert the Tableau data files to CSVs and dump the schema.
 
-Load into umbra:
+Afterwards, you can load the schema and the data:
 ```sql
 -- create the Extract table that tableau uses
 \i ahlyAfrica/excel_direct_42363_552682708300.sql
