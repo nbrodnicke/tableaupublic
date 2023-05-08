@@ -37,9 +37,6 @@ def convert_tde_to_hyper(tde_path: Path):
             schema_table = f"\"{schema}\".\"{table}\""
             create_table_command = f"CREATE TABLE {escape_name(schema_table)} AS SELECT * FROM {td.table_name}"
 
-            res = connection.execute_command(f"SELECT * FROM \"Extract\"")
-            print(res)
-
             # Execute
             connection.execute_command(create_table_command)
 

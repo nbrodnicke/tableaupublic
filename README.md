@@ -38,11 +38,15 @@ Then, use the python scripts to convert the Tableau data files to CSVs and dump 
 
 Load into umbra:
 ```sql
-create schema "Extract";
--- create the table with the schema
+-- create the Extract table that tableau uses
 \i ahlyAfrica/excel_direct_42363_552682708300.sql
 -- and load the csv data
-copy "Extract"."Extract" from 'ahlyAfrica/excel_direct_42363_552682708300.csv' delimiter '|' null '';
+\i ahlyAfrica/load.sql
+```
+
+Now, you can execute queries:
+```sql
+\i ahlyAfrica/queries.sql
 ```
 
 

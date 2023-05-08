@@ -8,6 +8,8 @@ from tableauhyperapi import HyperProcess, Telemetry, Connection, TableName, Null
 def fix_column_type(column_type: str):
     if str(column_type) == 'BIG_INT':
         return 'BIGINT'
+    if str(column_type) == 'DOUBLE':
+        return 'DOUBLE PRECISION'
     return column_type
 
 
@@ -19,24 +21,29 @@ def convert_to_csv(hyper_database: Path):
     print(f"Converting {hyper_database} to {csv_file}...")
     with HyperProcess(telemetry=Telemetry.DO_NOT_SEND_USAGE_DATA_TO_TABLEAU) as hyper:
         with Connection(endpoint=hyper.endpoint, database=hyper_database) as connection:
-            with open(schema_file, 'w') as schema:
+            exported_table = None
+            with open(schema_file, 'w') as schema_out:
                 # The table names in the "Extract" schema (the default schema).
-                table_names = connection.catalog.get_table_names(schema="Extract")
-                for table in table_names:
-                    table_definition = connection.catalog.get_table_definition(name=table)
-                    print(f"CREATE TABLE {table} (", file=schema)
-                    for i, column in enumerate(table_definition.columns):
-                        print(f"{column.name} {fix_column_type(column.type)}"
-                              f"{' not null' if column.nullability == Nullability.NOT_NULLABLE else ''}",
-                              file=schema, end='')
-                        if i != len(table_definition.columns) - 1:
-                            print(',', file=schema)
-                    print("\n)", file=schema)
+                for schema in connection.catalog.get_schema_names():
+                    table_names = connection.catalog.get_table_names(schema=schema)
+                    for table in table_names:
+                        if exported_table is not None:
+                            print("found two tables...")
+                        exported_table = table
+                        table_definition = connection.catalog.get_table_definition(name=table)
+                        print(f'CREATE SCHEMA "Extract";', file=schema_out)
+                        print(f'CREATE TABLE "Extract"."Extract" (', file=schema_out)
+                        for i, column in enumerate(table_definition.columns):
+                            print(f"{column.name} {fix_column_type(column.type)}"
+                                  f"{' not null' if column.nullability == Nullability.NOT_NULLABLE else ''}",
+                                  file=schema_out, end='')
+                            if i != len(table_definition.columns) - 1:
+                                print(',', file=schema_out)
+                        print("\n);", file=schema_out)
 
             with open(csv_file, 'w') as csv_out:
                 csv_writer = csv.writer(csv_out, delimiter='|')
-                table_name = TableName("Extract", "Extract")
-                rows = connection.execute_list_query(query=f"SELECT * FROM {table_name}")
+                rows = connection.execute_list_query(query=f"SELECT * FROM {exported_table}")
                 csv_writer.writerows(rows)
 
 
