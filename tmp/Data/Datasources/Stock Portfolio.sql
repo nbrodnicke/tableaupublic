@@ -1,0 +1,11 @@
+CREATE SCHEMA "Extract";
+CREATE TABLE "Extract"."Extract" (
+"Adj Close" DOUBLE PRECISION,
+"Close" DOUBLE PRECISION,
+"Date" DATE,
+"High" DOUBLE PRECISION,
+"Low" DOUBLE PRECISION,
+"Open" DOUBLE PRECISION,
+"Symbol" TEXT,
+"Volume" BIGINT
+);

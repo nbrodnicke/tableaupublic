@@ -1,0 +1,762 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20233.23.1027.1345                               -->
+<workbook original-version='18.1' source-build='2023.2.1 (20232.23.0805.0415)' source-platform='mac' version='18.1' xml:base='https://public.tableau.com' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <_.fcp.AccessibleZoneTabOrder.true...AccessibleZoneTabOrder />
+    <_.fcp.AnimationOnByDefault.true...AnimationOnByDefault />
+    <_.fcp.MarkAnimation.true...MarkAnimation />
+    <_.fcp.ObjectModelEncapsulateLegacy.true...ObjectModelEncapsulateLegacy />
+    <_.fcp.ObjectModelExtractV2.true...ObjectModelExtractV2 />
+    <_.fcp.ObjectModelTableType.true...ObjectModelTableType />
+    <_.fcp.SchemaViewerObjectModel.true...SchemaViewerObjectModel />
+    <SetMembershipControl />
+    <SheetIdentifierTracking />
+    <SortTagCleanup />
+    <_.fcp.VConnDownstreamExtractsWithWarnings.true...VConnDownstreamExtractsWithWarnings />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <repository-location derived-from='https://vizhub/workbooks/SparklinesKPIs?rev=1.4' id='SparklinesKPIs' path='/workbooks' revision='1.4' />
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <_.fcp.AnimationOnByDefault.false...style>
+    <_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule element='animation'>
+      <_.fcp.AnimationOnByDefault.false...format attr='animation-on' value='ao-on' />
+    </_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule>
+  </_.fcp.AnimationOnByDefault.false...style>
+  <datasources>
+    <datasource hasconnection='false' inline='true' name='Parameters' version='18.1'>
+      <aliases enabled='yes' />
+      <column caption='Sort by' datatype='string' name='[Parameter 3]' param-domain-type='list' role='measure' type='nominal' value='&quot;Last Week Volume&quot;'>
+        <calculation class='tableau' formula='&quot;Last Week Volume&quot;' />
+        <members>
+          <member value='&quot;Last Week Volume&quot;' />
+          <member value='&quot;Prior Week Volume&quot;' />
+          <member value='&quot;Change&quot;' />
+          <member value='&quot;\% Change&quot;' />
+        </members>
+      </column>
+    </datasource>
+    <datasource caption='Stock Portfolio' inline='true' name='federated.1e3327d1k7z32c1dqo7c8050n588' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='Stock Portfolio' name='excel-direct.14ymb250leb94o1fjls7k16zu4u3'>
+            <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' interpretationMode='0' validate='no' workgroup-auth-mode='as-is' />
+          </named-connection>
+        </named-connections>
+        <_.fcp.ObjectModelEncapsulateLegacy.false...relation connection='excel-direct.14ymb250leb94o1fjls7k16zu4u3' name='Stocks' table='[Stocks$]' type='table'>
+          <columns gridOrigin='A1:H10001:no:A1:H10001:0' header='yes' outcome='6'>
+            <column datatype='real' name='Adj Close' ordinal='0' />
+            <column datatype='real' name='Close' ordinal='1' />
+            <column datatype='date' name='Date' ordinal='2' />
+            <column datatype='real' name='High' ordinal='3' />
+            <column datatype='real' name='Low' ordinal='4' />
+            <column datatype='real' name='Open' ordinal='5' />
+            <column datatype='string' name='Symbol' ordinal='6' />
+            <column datatype='integer' name='Volume' ordinal='7' />
+          </columns>
+        </_.fcp.ObjectModelEncapsulateLegacy.false...relation>
+        <_.fcp.ObjectModelEncapsulateLegacy.true...relation connection='excel-direct.14ymb250leb94o1fjls7k16zu4u3' name='Stocks' table='[Stocks$]' type='table'>
+          <columns gridOrigin='A1:H10001:no:A1:H10001:0' header='yes' outcome='6'>
+            <column datatype='real' name='Adj Close' ordinal='0' />
+            <column datatype='real' name='Close' ordinal='1' />
+            <column datatype='date' name='Date' ordinal='2' />
+            <column datatype='real' name='High' ordinal='3' />
+            <column datatype='real' name='Low' ordinal='4' />
+            <column datatype='real' name='Open' ordinal='5' />
+            <column datatype='string' name='Symbol' ordinal='6' />
+            <column datatype='integer' name='Volume' ordinal='7' />
+          </columns>
+        </_.fcp.ObjectModelEncapsulateLegacy.true...relation>
+        <refresh increment-key='' incremental-updates='false' />
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[Stocks]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='integer' name='context'>0</attribute>
+              <attribute datatype='string' name='gridOrigin'>&quot;A1:H10001:no:A1:H10001:0&quot;</attribute>
+              <attribute datatype='boolean' name='header'>true</attribute>
+              <attribute datatype='integer' name='outcome'>6</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Adj Close</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[Adj Close]</local-name>
+            <parent-name>[Stocks]</parent-name>
+            <remote-alias>Adj Close</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>15</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;R8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Close</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[Close]</local-name>
+            <parent-name>[Stocks]</parent-name>
+            <remote-alias>Close</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>15</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;R8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Date</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[Date]</local-name>
+            <parent-name>[Stocks]</parent-name>
+            <remote-alias>Date</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>High</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[High]</local-name>
+            <parent-name>[Stocks]</parent-name>
+            <remote-alias>High</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>15</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;R8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Low</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[Low]</local-name>
+            <parent-name>[Stocks]</parent-name>
+            <remote-alias>Low</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>15</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;R8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Open</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[Open]</local-name>
+            <parent-name>[Stocks]</parent-name>
+            <remote-alias>Open</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>15</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;R8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Symbol</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[Symbol]</local-name>
+            <parent-name>[Stocks]</parent-name>
+            <remote-alias>Symbol</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RGB_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Volume</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Volume]</local-name>
+            <parent-name>[Stocks]</parent-name>
+            <remote-alias>Volume</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Max Date' datatype='date' name='[Calculation_1304214366238924806]' role='dimension' type='ordinal'>
+        <calculation class='tableau' formula='{ MAX([Date]) }' />
+      </column>
+      <column caption='Last 30 Days' datatype='boolean' name='[Calculation_1304214366239059975]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])&lt;30' />
+      </column>
+      <column caption='Last Week Volume' datatype='integer' name='[Calculation_1304214366239588360]' role='measure' type='ordinal'>
+        <calculation class='tableau' formula='{ FIXED [Symbol] : SUM(INT([Last 30 Days (copy)])*[Volume]) }' />
+      </column>
+      <column caption='Change' datatype='integer' name='[Calculation_1304214366240071689]' role='measure' type='ordinal'>
+        <calculation class='tableau' formula='[Calculation_1304214366239588360]-[Last Week Volume (copy)]' />
+      </column>
+      <column caption='% Change' datatype='real' default-format='p0.0%' name='[Calculation_1304214366240198666]' role='measure' type='ordinal'>
+        <calculation class='tableau' formula='[Calculation_1304214366240071689]/[Last Week Volume (copy)]' />
+      </column>
+      <column caption='Header' datatype='string' name='[Calculation_1304214366241488907]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='&quot;Last 30 Days as of: &quot; + str([Calculation_1304214366238924806])' />
+      </column>
+      <column caption='Sort by metric' datatype='real' name='[Calculation_1304214366241886220]' role='measure' type='ordinal'>
+        <calculation class='tableau' formula='-&#10;(CASE [Parameters].[Parameter 3]&#10;WHEN &apos;Last Week Volume&apos; THEN [Calculation_1304214366239588360]&#10;WHEN &apos;Prior Week Volume&apos; THEN [Last Week Volume (copy)]&#10;WHEN &apos;Change&apos; THEN [Calculation_1304214366240071689]&#10;ELSE [Calculation_1304214366240198666]&#10;END)' />
+      </column>
+      <column caption='Last Week' datatype='boolean' name='[Last 30 Days (copy)]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])&lt;7' />
+      </column>
+      <column caption='Last Day' datatype='boolean' name='[Last Week (copy 2)]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])=0' />
+      </column>
+      <column caption='Prior Week' datatype='boolean' name='[Last Week (copy)]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])&gt;=7 and DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])&lt;14' />
+      </column>
+      <column caption='Last Day Volume' datatype='integer' name='[Last Week Volume (copy 2)]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [Last Week (copy 2)] THEN [Volume]&#10;END' />
+      </column>
+      <column caption='Prior Week Volume' datatype='integer' name='[Last Week Volume (copy)]' role='measure' type='ordinal'>
+        <calculation class='tableau' formula='{ FIXED [Symbol] : SUM( INT([Last Week (copy)])*[Volume] ) }' />
+      </column>
+      <_.fcp.ObjectModelTableType.true...column caption='Stocks' datatype='table' name='[__tableau_internal_object_id__].[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]' role='measure' type='quantitative' />
+      <extract _.fcp.ObjectModelExtractV2.true...object-id='' _.fcp.VConnDownstreamExtractsWithWarnings.true...user-specific='false' count='-1' enabled='true' units='records'>
+        <connection access_mode='readonly' authentication='auth-none' author-locale='en_GB' class='hyper' dbname='Data/Datasources/Stock Portfolio.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='11/06/2023 01:54:54 PM'>
+          <_.fcp.ObjectModelEncapsulateLegacy.false...relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <_.fcp.ObjectModelEncapsulateLegacy.true...relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <refresh increment-key='' incremental-updates='false'>
+            <refresh-event add-from-file-path='Stock Portfolio' increment-value='%null%' refresh-type='create' rows-inserted='52416' timestamp-start='2023-11-06 13:54:53.909' />
+          </refresh>
+          <metadata-records>
+            <metadata-record class='column'>
+              <remote-name>Adj Close</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[Adj Close]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Adj Close</remote-alias>
+              <ordinal>0</ordinal>
+              <family>Stocks</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>31413</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Close</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[Close]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Close</remote-alias>
+              <ordinal>1</ordinal>
+              <family>Stocks</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>16487</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Date</remote-name>
+              <remote-type>133</remote-type>
+              <local-name>[Date]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Date</remote-alias>
+              <ordinal>2</ordinal>
+              <family>Stocks</family>
+              <local-type>date</local-type>
+              <aggregation>Year</aggregation>
+              <approx-count>14415</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>High</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[High]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>High</remote-alias>
+              <ordinal>3</ordinal>
+              <family>Stocks</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>14048</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Low</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[Low]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Low</remote-alias>
+              <ordinal>4</ordinal>
+              <family>Stocks</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>12872</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Open</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[Open]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Open</remote-alias>
+              <ordinal>5</ordinal>
+              <family>Stocks</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>12517</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Symbol</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[Symbol]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Symbol</remote-alias>
+              <ordinal>6</ordinal>
+              <family>Stocks</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>8</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RGB_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Volume</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[Volume]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Volume</remote-alias>
+              <ordinal>7</ordinal>
+              <family>Stocks</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>17945</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Stocks_FE9167CF4D5347F58A5246A8B79ACE0D]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+          </metadata-records>
+        </connection>
+      </extract>
+      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United Kingdom&quot;' />
+      </semantic-values>
+      <date-options start-of-week='monday' />
+      <datasource-dependencies datasource='Parameters'>
+        <column caption='Sort by' datatype='string' name='[Parameter 3]' param-domain-type='list' role='measure' type='nominal' value='&quot;Last Week Volume&quot;'>
+          <calculation class='tableau' formula='&quot;Last Week Volume&quot;' />
+        </column>
+      </datasource-dependencies>
+      <_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+        <objects>
+          <object caption='Stocks' id='Stocks_FE9167CF4D5347F58A5246A8B79ACE0D'>
+            <properties context=''>
+              <relation connection='excel-direct.14ymb250leb94o1fjls7k16zu4u3' name='Stocks' table='[Stocks$]' type='table'>
+                <columns gridOrigin='A1:H10001:no:A1:H10001:0' header='yes' outcome='6'>
+                  <column datatype='real' name='Adj Close' ordinal='0' />
+                  <column datatype='real' name='Close' ordinal='1' />
+                  <column datatype='date' name='Date' ordinal='2' />
+                  <column datatype='real' name='High' ordinal='3' />
+                  <column datatype='real' name='Low' ordinal='4' />
+                  <column datatype='real' name='Open' ordinal='5' />
+                  <column datatype='string' name='Symbol' ordinal='6' />
+                  <column datatype='integer' name='Volume' ordinal='7' />
+                </columns>
+              </relation>
+            </properties>
+            <properties context='extract'>
+              <relation name='Extract' table='[Extract].[Extract]' type='table' />
+            </properties>
+          </object>
+        </objects>
+      </_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Stocks'>
+      <repository-location derived-from='https://vizhub/workbooks/SparklinesKPIs/Stocks?rev=' id='89465875' path='/workbooks/SparklinesKPIs' revision='' />
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Stock Portfolio' name='federated.1e3327d1k7z32c1dqo7c8050n588' />
+            <datasource name='Parameters' />
+          </datasources>
+          <datasource-dependencies datasource='Parameters'>
+            <column caption='Sort by' datatype='string' name='[Parameter 3]' param-domain-type='list' role='measure' type='nominal' value='&quot;Last Week Volume&quot;'>
+              <calculation class='tableau' formula='&quot;Last Week Volume&quot;' />
+            </column>
+          </datasource-dependencies>
+          <datasource-dependencies datasource='federated.1e3327d1k7z32c1dqo7c8050n588'>
+            <column caption='Max Date' datatype='date' name='[Calculation_1304214366238924806]' role='dimension' type='ordinal'>
+              <calculation class='tableau' formula='{ MAX([Date]) }' />
+            </column>
+            <column caption='Last 30 Days' datatype='boolean' name='[Calculation_1304214366239059975]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])&lt;30' />
+            </column>
+            <column caption='Last Week Volume' datatype='integer' name='[Calculation_1304214366239588360]' role='measure' type='ordinal'>
+              <calculation class='tableau' formula='{ FIXED [Symbol] : SUM(INT([Last 30 Days (copy)])*[Volume]) }' />
+            </column>
+            <column caption='Change' datatype='integer' name='[Calculation_1304214366240071689]' role='measure' type='ordinal'>
+              <calculation class='tableau' formula='[Calculation_1304214366239588360]-[Last Week Volume (copy)]' />
+            </column>
+            <column caption='% Change' datatype='real' default-format='p0.0%' name='[Calculation_1304214366240198666]' role='measure' type='ordinal'>
+              <calculation class='tableau' formula='[Calculation_1304214366240071689]/[Last Week Volume (copy)]' />
+            </column>
+            <column caption='Header' datatype='string' name='[Calculation_1304214366241488907]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='&quot;Last 30 Days as of: &quot; + str([Calculation_1304214366238924806])' />
+            </column>
+            <column caption='Sort by metric' datatype='real' name='[Calculation_1304214366241886220]' role='measure' type='ordinal'>
+              <calculation class='tableau' formula='-&#10;(CASE [Parameters].[Parameter 3]&#10;WHEN &apos;Last Week Volume&apos; THEN [Calculation_1304214366239588360]&#10;WHEN &apos;Prior Week Volume&apos; THEN [Last Week Volume (copy)]&#10;WHEN &apos;Change&apos; THEN [Calculation_1304214366240071689]&#10;ELSE [Calculation_1304214366240198666]&#10;END)' />
+            </column>
+            <column datatype='date' name='[Date]' role='dimension' type='ordinal' />
+            <column caption='Last Week' datatype='boolean' name='[Last 30 Days (copy)]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])&lt;7' />
+            </column>
+            <column caption='Last Day' datatype='boolean' name='[Last Week (copy 2)]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])=0' />
+            </column>
+            <column caption='Prior Week' datatype='boolean' name='[Last Week (copy)]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])&gt;=7 and DATEDIFF(&apos;day&apos;,[Date],[Calculation_1304214366238924806])&lt;14' />
+            </column>
+            <column caption='Last Day Volume' datatype='integer' name='[Last Week Volume (copy 2)]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF [Last Week (copy 2)] THEN [Volume]&#10;END' />
+            </column>
+            <column caption='Prior Week Volume' datatype='integer' name='[Last Week Volume (copy)]' role='measure' type='ordinal'>
+              <calculation class='tableau' formula='{ FIXED [Symbol] : SUM( INT([Last Week (copy)])*[Volume] ) }' />
+            </column>
+            <column datatype='string' name='[Symbol]' role='dimension' type='nominal' />
+            <column datatype='integer' name='[Volume]' role='measure' type='quantitative' />
+            <column-instance column='[Calculation_1304214366239059975]' derivation='None' name='[none:Calculation_1304214366239059975:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_1304214366241488907]' derivation='None' name='[none:Calculation_1304214366241488907:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Date]' derivation='None' name='[none:Date:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Symbol]' derivation='None' name='[none:Symbol:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_1304214366239588360]' derivation='Sum' name='[sum:Calculation_1304214366239588360:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Calculation_1304214366240071689]' derivation='Sum' name='[sum:Calculation_1304214366240071689:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Calculation_1304214366240198666]' derivation='Sum' name='[sum:Calculation_1304214366240198666:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Calculation_1304214366240198666]' derivation='Sum' name='[sum:Calculation_1304214366240198666:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_1304214366241886220]' derivation='Sum' name='[sum:Calculation_1304214366241886220:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Last Week Volume (copy 2)]' derivation='Sum' name='[sum:Last Week Volume (copy 2):qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Last Week Volume (copy)]' derivation='Sum' name='[sum:Last Week Volume (copy):ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Volume]' derivation='Sum' name='[sum:Volume:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366239059975:nk]'>
+            <groupfilter function='member' level='[none:Calculation_1304214366239059975:nk]' member='true' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Symbol:nk]'>
+            <groupfilter function='except' user:ui-domain='relevant' user:ui-enumeration='exclusive' user:ui-marker='enumerate'>
+              <groupfilter function='level-members' level='[none:Symbol:nk]' />
+              <groupfilter function='member' level='[none:Symbol:nk]' member='&quot;DATA&quot;' />
+            </groupfilter>
+          </filter>
+          <computed-sort column='[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Symbol:nk]' direction='ASC' using='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366241886220:qk]' />
+          <slices>
+            <column>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366239059975:nk]</column>
+            <column>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Symbol:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' domain-expand='false' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Volume:qk]' field-type='quantitative' range-type='independent' scope='rows' type='space' />
+            <format attr='subtitle' class='0' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Volume:qk]' scope='rows' value='' />
+            <format attr='auto-subtitle' class='0' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Volume:qk]' scope='rows' value='true' />
+            <format attr='display' class='0' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Volume:qk]' scope='rows' value='false' />
+            <format attr='display' class='0' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Date:qk]' scope='cols' value='false' />
+            <encoding attr='space' class='0' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy 2):qk]' field-type='quantitative' fold='true' scope='rows' synchronized='true' type='space' />
+            <format attr='display' class='0' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy 2):qk]' scope='rows' value='false' />
+            <format attr='width' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Volume:qk]' value='428' />
+            <format attr='width' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy 2):qk]' value='428' />
+          </style-rule>
+          <style-rule element='cell'>
+            <format attr='font-size' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366239588360:ok]' value='18' />
+          </style-rule>
+          <style-rule element='header'>
+            <format attr='height-header' value='36' />
+            <format attr='height' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366241488907:nk]' value='48' />
+            <format attr='width' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366239588360:ok]' value='120' />
+            <format attr='width' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Symbol:nk]' value='60' />
+            <format attr='width' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy):ok]' value='116' />
+            <format attr='width' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240071689:ok]' value='124' />
+            <format attr='width' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:ok]' value='120' />
+          </style-rule>
+          <style-rule element='field-labels-decoration'>
+            <format attr='vertical-align' value='bottom' />
+          </style-rule>
+          <style-rule element='label'>
+            <format attr='vertical-align' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366241488907:nk]' value='bottom' />
+            <format attr='text-align' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366239588360:ok]' value='right' />
+            <format attr='text-align' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy):ok]' value='right' />
+            <format attr='text-align' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240071689:ok]' value='right' />
+            <format attr='text-align' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:ok]' value='right' />
+            <format attr='font-size' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366239588360:ok]' value='18' />
+            <format attr='text-format' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366239588360:ok]' value='n#,##0,,.0M;-#,##0,,.0M' />
+            <format attr='text-format' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy):ok]' value='n#,##0,,.0M;-#,##0,,.0M' />
+            <format attr='font-weight' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy):ok]' value='bold' />
+            <format attr='font-weight' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366239588360:ok]' value='bold' />
+            <format attr='font-size' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240071689:ok]' value='18' />
+            <format attr='font-weight' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240071689:ok]' value='bold' />
+            <format attr='text-format' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240071689:ok]' value='n#,##0,,.0M;-#,##0,,.0M' />
+            <format attr='font-size' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:ok]' value='18' />
+            <format attr='font-weight' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:ok]' value='bold' />
+            <format attr='font-size' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy):ok]' value='18' />
+          </style-rule>
+          <style-rule element='mark'>
+            <encoding attr='color' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:qk]' palette='red_black_10_0' type='interpolated' />
+          </style-rule>
+          <style-rule element='table'>
+            <format attr='show-null-value-warning' value='false' />
+            <format attr='band-size' scope='rows' value='1' />
+            <format attr='band-level' scope='rows' value='5' />
+          </style-rule>
+          <style-rule element='worksheet'>
+            <format attr='display-field-labels' scope='cols' value='false' />
+            <format attr='font-family' value='Century Gothic' />
+            <format attr='font-size' value='10' />
+            <format attr='in-tooltip' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366241488907:nk]' value='false' />
+            <format attr='in-tooltip' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366239588360:ok]' value='false' />
+            <format attr='in-tooltip' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy):ok]' value='false' />
+            <format attr='in-tooltip' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240071689:ok]' value='false' />
+            <format attr='in-tooltip' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:ok]' value='false' />
+            <format attr='in-tooltip' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy 2):qk]' value='false' />
+            <format attr='in-tooltip' field='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:qk]' value='false' />
+            <format attr='color' value='#333333' />
+          </style-rule>
+          <style-rule element='gridline'>
+            <format attr='line-visibility' value='off' />
+          </style-rule>
+          <style-rule element='zeroline'>
+            <format attr='line-visibility' value='off' />
+          </style-rule>
+          <style-rule element='table-div'>
+            <format attr='stroke-size' scope='cols' value='0' />
+            <format attr='line-visibility' scope='cols' value='off' />
+            <format attr='div-level' scope='rows' value='0' />
+          </style-rule>
+          <style-rule element='title'>
+            <format attr='font-family' value='Century Gothic' />
+            <format attr='font-size' value='10' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-disallow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+          <pane id='1' selection-relaxation-option='selection-relaxation-disallow' y-axis-name='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Volume:qk]'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='0.29585635662078857' />
+                <format attr='mark-color' value='#555555' />
+              </style-rule>
+            </style>
+          </pane>
+          <pane id='2' selection-relaxation-option='selection-relaxation-disallow' y-axis-name='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy 2):qk]'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Circle' />
+            <encodings>
+              <color column='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:qk]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>(([federated.1e3327d1k7z32c1dqo7c8050n588].[none:Symbol:nk] / ([federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366239588360:ok] / ([federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy):ok] / ([federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240071689:ok] / [federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:ok])))) * ([federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Volume:qk] + [federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy 2):qk]))</rows>
+        <cols>([federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366241488907:nk] * [federated.1e3327d1k7z32c1dqo7c8050n588].[none:Date:qk])</cols>
+      </table>
+      <simple-id uuid='{2DE6A452-C52B-4375-BF6A-E4B5C9C03B5B}' />
+    </worksheet>
+  </worksheets>
+  <dashboards>
+    <dashboard _.fcp.AccessibleZoneTabOrder.true...enable-sort-zone-taborder='true' name='Dashboard'>
+      <repository-location derived-from='https://vizhub/workbooks/SparklinesKPIs/Dashboard?rev=' id='89465873' path='/workbooks/SparklinesKPIs' revision='' />
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontalignment='0' fontname='Century Gothic'>How are my stocks performing?</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <style>
+        <style-rule element='parameter-ctrl'>
+          <format attr='font-family' value='Century Gothic' />
+        </style-rule>
+        <style-rule element='parameter-ctrl-title'>
+          <format attr='font-family' value='Century Gothic' />
+        </style-rule>
+      </style>
+      <size maxheight='700' maxwidth='800' minheight='700' minwidth='800' sizing-mode='fixed' />
+      <datasources>
+        <datasource name='Parameters' />
+      </datasources>
+      <datasource-dependencies datasource='Parameters'>
+        <column caption='Sort by' datatype='string' name='[Parameter 3]' param-domain-type='list' role='measure' type='nominal' value='&quot;Last Week Volume&quot;'>
+          <calculation class='tableau' formula='&quot;Last Week Volume&quot;' />
+          <members>
+            <member value='&quot;Last Week Volume&quot;' />
+            <member value='&quot;Prior Week Volume&quot;' />
+            <member value='&quot;Change&quot;' />
+            <member value='&quot;\% Change&quot;' />
+          </members>
+        </column>
+      </datasource-dependencies>
+      <zones>
+        <zone h='100000' id='2' type-v2='layout-basic' w='100000' x='0' y='0'>
+          <zone h='89339' id='7' param='horz' type-v2='layout-flow' w='98000' x='1000' y='9518'>
+            <zone h='89339' id='3' param='vert' type-v2='layout-flow' w='98000' x='1000' y='9518'>
+              <zone h='89339' id='4' type-v2='layout-basic' w='98000' x='1000' y='9518'>
+                <zone h='89339' id='5' name='Stocks' show-title='false' w='98000' x='1000' y='9518'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='margin-right' value='0' />
+                    <format attr='margin-left' value='0' />
+                  </zone-style>
+                </zone>
+              </zone>
+            </zone>
+          </zone>
+          <zone h='8375' id='10' param='horz' type-v2='layout-flow' w='98000' x='1000' y='1143'>
+            <zone fixed-size='624' h='8375' id='1' is-fixed='true' type-v2='title' w='78500' x='1000' y='1143'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+                <format attr='margin-top' value='0' />
+                <format attr='margin-left' value='0' />
+              </zone-style>
+            </zone>
+            <zone h='8375' id='9' mode='compact' param='[Parameters].[Parameter 3]' type-v2='paramctrl' w='19500' x='79500' y='1143'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+                <format attr='margin-top' value='0' />
+                <format attr='background-color' value='#ffffff' />
+              </zone-style>
+            </zone>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='4' />
+            <format attr='margin-top' value='8' />
+            <format attr='margin-right' value='8' />
+            <format attr='margin-bottom' value='8' />
+            <format attr='margin-left' value='8' />
+          </zone-style>
+        </zone>
+      </zones>
+      <simple-id uuid='{F60BBB49-5254-45D2-AFBD-C2CCCDF68634}' />
+    </dashboard>
+  </dashboards>
+  <windows source-height='30'>
+    <window class='dashboard' maximized='true' name='Dashboard'>
+      <viewpoints>
+        <viewpoint name='Stocks'>
+          <zoom type='entire-view' />
+        </viewpoint>
+      </viewpoints>
+      <active id='-1' />
+      <simple-id uuid='{E9EFFBA4-661B-4007-A1A2-DC504CE0CF23}' />
+    </window>
+    <window class='worksheet' name='Stocks'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='compact' param='[Parameters].[Parameter 3]' type='parameter' />
+            <card pane-specification-id='2' param='[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:qk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366186192896:nk]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366187421697:ok]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366237368323:ok]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366237491204:nk]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366238924806:ok]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366239059975:nk]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Calculation_1304214366241488907:nk]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Date:ok]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Date:qk]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Last 30 Days (copy):nk]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Last 7 Days (copy):nk]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[none:Stock:nk]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366239588360:ok]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240071689:ok]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Calculation_1304214366240198666:qk]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[sum:Last Week Volume (copy):ok]</field>
+            <field>[federated.1e3327d1k7z32c1dqo7c8050n588].[yr:Date:ok]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{8E0B6703-C7CA-4B6C-8F3C-167931E9F6C0}' />
+    </window>
+  </windows>
+</workbook>

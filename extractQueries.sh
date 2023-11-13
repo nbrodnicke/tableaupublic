@@ -18,7 +18,7 @@ DB=$1;
 
 # Switch to Tableau logs directory
 if [ ! -f hyperd.log ]; then
-    cd "$HOME/Documents/My Tableau Repository/Logs" || (echo "could not change to Logs directory" && exit 1)
+    cd "$HOME/Documents/Eigenes Tableau-Repository/Protokolle" || (echo "could not change to Logs directory" && exit 1)
 fi
 [ -f hyperd.log ] || (echo "Could not locate hyperd.log file" && exit 1)
 
