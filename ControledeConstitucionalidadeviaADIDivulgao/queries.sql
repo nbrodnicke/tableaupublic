@@ -6,7 +6,7 @@ SELECT SUM(1) AS "cnt:TEMP(row count)(290714814)(0):qk"
 FROM "Extract"."Extract" "Extract"
 HAVING (COUNT(1) > 0)
 /* { "tableau-query-origins": { "query-category": "RowCount", "lqctx-root-activity-id": "IjuRfNJG0aEIHmJDbf8J57" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)"
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)"
 FROM "Extract"."Extract" "Extract"
 GROUP BY 1
 ORDER BY "Data da Distribuicao (BNDPJ) (Years)" ASC NULLS FIRST
@@ -22,9 +22,9 @@ SELECT "Group_1"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Dist
   (CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) AS "Parte (requerente#) (group)",
   COUNT("Extract"."Código Requerente") AS "cnt:Código Requerente:ok",
   (NOT ("t0"."$temp5_output" IS NULL)) AS "io:Federal/Estadual:nk",
-  DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
+  TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
 FROM "Extract"."Extract" "Extract"
-  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_1" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_1" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_2" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_2"."Ato Impugnado")
   LEFT JOIN (
   SELECT "Group_3"."Ato Impugnado (group) 1" AS "Ato Impugnado (group) 1",
@@ -51,7 +51,7 @@ GROUP BY 1,
 SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_3_Group' AND r.relkind = 'x';
 SELECT "Group_1"."Ato Impugnado (separando os atos estaduais)" AS "Ato Impugnado (separando os atos estaduais)",
   COUNT("Extract"."Código Requerente") AS "cnt:Código Requerente:ok",
-  DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
+  TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_3_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_2" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_2"."Ato Impugnado")
@@ -63,7 +63,7 @@ SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_1_1
 SELECT (CASE ("t0"."$temp1_import1" IS NULL) WHEN TRUE THEN "Extract"."Ato Impugnado" WHEN FALSE THEN "t0"."Ato Impugnado (separando os atos estaduais)" ELSE NULL END) AS "Ato Impugnado (separando os atos estaduais)",
   COUNT("Extract"."Código Requerente") AS "cnt:Código Requerente:ok",
   (NOT ("t1"."$temp5_output" IS NULL)) AS "io:Federal/Estadual:nk",
-  DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
+  TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
   LEFT JOIN (
@@ -102,7 +102,7 @@ FROM "Extract"."Extract" "Extract"
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "OfW1zX5+UNqLTTtLKC6kJr", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do merito (agrupado) (copy)",
   SUM(1) AS "cnt:Classe:ok",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok",
@@ -118,30 +118,30 @@ FROM "Extract"."Extract" "Extract"
   WHERE ("Group_3"."Ato Impugnado (group) 1" IN ('1.1.1', '1.1.2', '6.3', '7'))
   GROUP BY 1
 ) "t0" ON ("Group_2"."Ato Impugnado (group) 1" = "t0"."Ato Impugnado (group) 1")
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CAST(TRUNC(EXTRACT(YEAR FROM "Extract"."Data da Distribuicao (BNDPJ)")) AS BIGINT OR NULL) >= 1989) AND (CAST(TRUNC(EXTRACT(YEAR FROM "Extract"."Data da Distribuicao (BNDPJ)")) AS BIGINT OR NULL) <= 2012)) AND ((NOT (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NULL)) AND (CASE WHEN ("Group_1"."Julgamento do merito (agrupado) (copy)" IN ('aguardando julgamento', 'Concluso para acórdão')) THEN FALSE ELSE TRUE END)))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CAST(TRUNC(EXTRACT(YEAR FROM "Extract"."Data da Distribuicao (BNDPJ)")) AS BIGINT OR NULL) >= 1989) AND (CAST(TRUNC(EXTRACT(YEAR FROM "Extract"."Data da Distribuicao (BNDPJ)")) AS BIGINT OR NULL) <= 2012)) AND ((NOT (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NULL)) AND (CASE WHEN ("Group_1"."Julgamento do merito (agrupado) (copy)" IN ('aguardando julgamento', 'Concluso para acórdão')) THEN FALSE ELSE TRUE END)))
 GROUP BY 1,
   2,
   5
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "M7qoEbV3kwGJpe9jZNwY8T", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)"
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)"
 FROM "Extract"."Extract" "Extract"
 GROUP BY 1
 ORDER BY "Data do Julgamento do mérito (Years)" ASC NULLS FIRST
 /* { "tableau-query-origins": { "query-category": "Unknown", "lqctx-root-activity-id": "OIopjA5xkiwLiTje4v/ibk" } } */;
 SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_6_Group' AND r.relkind = 'x';
 SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_7_Group' AND r.relkind = 'x';
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Group_1"."Julgamento do merito (completo) (group) 1" AS "Julgamento do merito (completo) (group) 1",
   SUM(1) AS "cnt:Classe:ok",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_7_Group" "Group_1" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_1"."Julgamento do merito (completo)")
-  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_6_Group" "Group_2" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data do Julgamento do mérito (Years)")
+  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_6_Group" "Group_2" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data do Julgamento do mérito (Years)")
 WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ("Group_1"."Julgamento do merito (completo) (group) 1" IN ('aguardando julgamento (com liminar deferida em parte)', 'Improcedente (Plenário)', 'Procedente (Plenário)'))) AND (CASE WHEN ("Group_2"."Data do Julgamento do mérito (Years) (grupo)" = (DATE '2013-01-01')) THEN FALSE ELSE TRUE END))
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "OIopjA5xkiwLiTje4v/ibk", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Group_1"."Julgamento do merito (completo) (group) 1" AS "Julgamento do merito (completo) (group) 1",
   SUM(1) AS "cnt:Classe:ok",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok",
@@ -157,7 +157,7 @@ FROM "Extract"."Extract" "Extract"
   WHERE ("Group_3"."Ato Impugnado (group) 1" IN ('1.1.1', '1.1.2', '6.3', '7'))
   GROUP BY 1
 ) "t0" ON ("Group_2"."Ato Impugnado (group) 1" = "t0"."Ato Impugnado (group) 1")
-  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_6_Group" "Group_4" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data do Julgamento do mérito (Years)")
+  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_6_Group" "Group_4" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data do Julgamento do mérito (Years)")
 WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ("Group_1"."Julgamento do merito (completo) (group) 1" IN ('aguardando julgamento (com liminar deferida em parte)', 'Improcedente (Plenário)', 'Procedente (Plenário)'))) AND (CASE WHEN ("Group_4"."Data do Julgamento do mérito (Years) (grupo)" = (DATE '2013-01-01')) THEN FALSE ELSE TRUE END))
 GROUP BY 1,
   2,
@@ -169,7 +169,7 @@ SELECT "Group_1"."Data do Julgamento do mérito (Years) (grupo)" AS "Data do Jul
   COUNT("Extract"."Numero") AS "cnt:Numero:ok",
   (NOT ("t0"."$temp6_output" IS NULL)) AS "io:Federal/Estadual:nk"
 FROM "Extract"."Extract" "Extract"
-  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_6_Group" "Group_1" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data do Julgamento do mérito (Years)")
+  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_6_Group" "Group_1" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data do Julgamento do mérito (Years)")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_7_Group" "Group_2" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_2"."Julgamento do merito (completo)")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_3" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_3"."Ato Impugnado")
   LEFT JOIN (
@@ -252,7 +252,7 @@ SELECT "Group_2"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Dist
   (NOT ("t0"."$temp8_output" IS NULL)) AS "io:Federal/Estadual:nk"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_10_Group" "Group_1" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_1"."Requerente")
-  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_2" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_2" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_9_Group" "Group_3" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_3"."Requerente")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_4" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_4"."Ato Impugnado")
   LEFT JOIN (
@@ -275,7 +275,7 @@ SELECT "Group_2"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Dist
   (NOT ("t0"."$temp8_output" IS NULL)) AS "io:Federal/Estadual:nk"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_10_Group" "Group_1" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_1"."Requerente")
-  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_2" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_2" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_8_Group" "Group_3" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_3"."Requerente")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_4" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_4"."Ato Impugnado")
   LEFT JOIN (
@@ -295,10 +295,10 @@ SELECT "Group_1"."Ato Impugnado (separando os atos estaduais)" AS "Ato Impugnado
   "Group_2"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Distribuicao (BNDPJ) (Years) (group)",
   "Extract"."Estadual contra estadual" AS "Estadual contra estadual",
   COUNT("Extract"."Código Requerente") AS "cnt:Código Requerente:ok",
-  DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
+  TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_3_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
-  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_2" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_2" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
 WHERE ((CASE WHEN ("Extract"."Estadual contra estadual" = 'município') THEN FALSE ELSE TRUE END) AND ("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ((CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) = '5'))
 GROUP BY 1,
   2,
@@ -310,7 +310,7 @@ SELECT MIN("t0"."cnt:Requerente:qk") AS "lower:cnt:Requerente:qk",
 FROM (
   SELECT COUNT("Extract"."Requerente") AS "cnt:Requerente:qk"
   FROM "Extract"."Extract" "Extract"
-    INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_1" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
+    INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_1" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
     INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_2" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_2"."Ato Impugnado")
   WHERE (((((CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) = '5') AND ("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Estadual contra estadual" = 'mesmo')) AND (NOT ("Extract"."Origem do ato impugnado" IS NULL))) AND ("Group_2"."Ato Impugnado (group) 1" IN ('4.1', '5.1', '6.1')))
   GROUP BY "Group_1"."Data da Distribuicao (BNDPJ) (Years) (group)",
@@ -323,7 +323,7 @@ SELECT "Group_1"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Dist
   "Extract"."Origem do ato impugnado" AS "Origem do ato impugnado",
   COUNT("Extract"."Origem do ato impugnado") AS "cnt:Origem do ato impugnado:ok"
 FROM "Extract"."Extract" "Extract"
-  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_1" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_1" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_1_Group" "Group_2" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_2"."Ato Impugnado")
 WHERE (((NOT ("Extract"."Origem do ato impugnado" IS NULL)) AND ("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Estadual contra estadual" = 'mesmo') AND ((CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) = '5')) AND ("Group_2"."Ato Impugnado (group) 1" IN ('4.1', '5.1', '6.1')))
 GROUP BY 1,
@@ -354,7 +354,7 @@ SELECT "Group_1"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Dist
   "Extract"."Origem do requerente" AS "Origem do requerente",
   SUM(1) AS "cnt:Origem do ato impugnado:ok"
 FROM "Extract"."Extract" "Extract"
-  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_1" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_2_Group" "Group_1" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_2" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_2"."Ato Impugnado")
 WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Estadual contra estadual" = 'outros') AND (NOT ("Extract"."Origem do ato impugnado" IS NULL)) AND ((CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) = '5')) AND ("Group_2"."Ato Impugnado (group) 1" IN ('4.1', '5.1', '6.1')))
 GROUP BY 1,
@@ -365,7 +365,7 @@ SELECT MIN("t0"."cnt:Requerente:qk") AS "lower:cnt:Requerente:qk",
 FROM (
   SELECT COUNT("Extract"."Requerente") AS "cnt:Requerente:qk"
   FROM "Extract"."Extract" "Extract"
-    INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_1" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
+    INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_1" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
     INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_1_Group" "Group_2" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_2"."Ato Impugnado")
   WHERE ((((CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) = '5') AND ("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Estadual contra estadual" = 'outros') AND (NOT ("Extract"."Origem do ato impugnado" IS NULL))) AND ("Group_2"."Ato Impugnado (group) 1" IN ('4.1', '5.1', '6.1')))
   GROUP BY "Group_1"."Data da Distribuicao (BNDPJ) (Years) (group)",
@@ -408,7 +408,7 @@ SELECT "Group_2"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Dist
   COUNT("Extract"."Código Requerente") AS "cnt:Código Requerente:ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_5_Group" "Group_1" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_1"."Requerente")
-  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_2" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_2" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_6_Group" "Group_3" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_3"."Requerente")
 WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CASE WHEN ("Group_3"."Partidos (copy)" IN ('PARTIDO DA SOCIAL DEMOCRACIA BRASILEIRA - PSDB - DIRETÓRIO MUNICIPAL DE ITU (CF 103, VIII)', 'PARTIDO HUMANISTA DA SOLIDARIEADE - PHS (CF 103, VIII)')) THEN FALSE ELSE TRUE END) AND (CASE WHEN (("Group_1"."Requerentes (individuais divididos por grupos) (copy 2)" IN ('ADALBERTO DE MORAES FILHO E OUTRO (A/S)')) OR ("Group_1"."Requerentes (individuais divididos por grupos) (copy 2)" IS NULL)) THEN FALSE ELSE TRUE END)))
 GROUP BY 1,
@@ -422,7 +422,7 @@ SELECT "Group_3"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Dist
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_1_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_5_Group" "Group_2" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_2"."Requerente")
-  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_3" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_3"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_3" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_3"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_6_Group" "Group_4" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_4"."Requerente")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_1_Group" "Group_5" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_5"."Ato Impugnado")
   LEFT JOIN (
@@ -462,7 +462,7 @@ FROM "Extract"."Extract" "Extract"
     1 AS "$temp5_import1"
   FROM "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_7_Group" "Group_3"
 ) "t0" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "t0"."Julgamento do merito (completo)")
-  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_4" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_4" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_1_Group" "Group_5" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_5"."Ato Impugnado")
   LEFT JOIN (
   SELECT "Group_6"."Ato Impugnado (group) 1" AS "Ato Impugnado (group) 1",
@@ -491,7 +491,7 @@ SELECT "Group_3"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Dist
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_1_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_5_Group" "Group_2" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_2"."Requerente")
-  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_3" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_3"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_3" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_3"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_8_Group" "Group_4" ON ("Extract"."Resultado da Liminar" IS NOT DISTINCT FROM "Group_4"."Resultado da Liminar")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_1_Group" "Group_5" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_5"."Ato Impugnado")
   LEFT JOIN (
@@ -522,7 +522,7 @@ FROM "Extract"."Extract" "Extract"
     1 AS "$temp5_import1"
   FROM "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_7_Group" "Group_3"
 ) "t0" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "t0"."Julgamento do merito (completo)")
-  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_4" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_4" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_6_Group" "Group_5" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_5"."Requerente")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_1_Group" "Group_6" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_6"."Ato Impugnado")
   LEFT JOIN (
@@ -568,7 +568,7 @@ FROM "Extract"."Extract" "Extract"
     1 AS "$temp5_import1"
   FROM "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_7_Group" "Group_3"
 ) "t0" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "t0"."Julgamento do merito (completo)")
-  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_4" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_4" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_5_Group" "Group_5" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_5"."Requerente")
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_1_Group" "Group_6" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_6"."Ato Impugnado")
   LEFT JOIN (
@@ -621,10 +621,10 @@ SELECT "Group_1"."Ato Impugnado (group) 1 (copy)" AS "Ato Impugnado (group) 1 (c
   "Group_2"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Distribuicao (BNDPJ) (Years) (group)",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
   COUNT("Extract"."Ato Impugnado") AS "cnt:Ato Impugnado:ok",
-  DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
+  TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_4_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
-  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_2" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_2_87F2EF7E-FCB5-40A2-91ED-1EAE5B7E6364_2_Group" "Group_2" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")
 WHERE ((CASE WHEN (("Extract"."Ato Impugnado" IN ('0', '0.1', '0.1.1.2', '0.1.2', '0.2', '0.2.1', '0.2.1.1', '0.2.1.2', '0.4', '0.4.1.1', '0.5', '0.6', '0.8')) OR ("Extract"."Ato Impugnado" IS NULL)) THEN FALSE ELSE TRUE END) AND ("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')))
 GROUP BY 1,
   2,
@@ -656,6 +656,18 @@ FROM (
   GROUP BY "Extract"."Origem do ato impugnado"
 ) "t0"
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "G4V7cMo30+EJbuxOSMx1Rq" } } */;
+SELECT "Country"."ID" AS "Country_ID", "Country"."ParentID" AS "Country_ParentID", "CountrySynonyms"."Name" AS "Country_Name", "Country"."ISO3166_3" AS "Country_ISO3166_3", "Country"."ISO3166_2" AS "Country_ISO3166_2", "Country"."FIPS" AS "Country_FIPS"
+FROM "public"."Country" "Country"
+  INNER JOIN "public"."CountrySynonyms" "CountrySynonyms" ON "Country"."ID" = "CountrySynonyms"."ParentID" AND "Country"."MapCode" = "CountrySynonyms"."MapCode"
+WHERE "Country"."MapCode" IN (0, 1);
+SELECT "State"."ID" AS "State_ID", "State"."ParentID" AS "State_ParentID", "StateSynonyms"."Name" AS "State_Name"
+FROM "public"."State" "State"
+  INNER JOIN "public"."StateSynonyms" "StateSynonyms" ON "State"."ID" = "StateSynonyms"."ParentID" AND "State"."MapCode" = "StateSynonyms"."MapCode"
+WHERE "State"."MapCode" IN (0, 1) AND "State"."ParentID" = 1242143;
+SELECT "State"."ID" AS "State_ID", "LocalData"."Geometry" AS "Geometry (generated)", "LocalData"."Latitude" AS "Latitude (generated)", "LocalData"."Longitude" AS "Longitude (generated)"
+FROM "public"."State" "State"
+  LEFT JOIN "public"."LocalDataState" "LocalData" ON "State"."ID" = "LocalData"."ParentID" AND "State"."MapCode" = "LocalData"."MapCode"
+WHERE "State"."MapCode" IN (0, 1) AND "State"."ParentID" = 1242143;
 SELECT (CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) AS "Parte (requerente#) (group)"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
@@ -678,7 +690,7 @@ SELECT "Group_1"."Fases dos processos" AS "Fases dos processos",
   (NOT ("t0"."$temp6_output" IS NULL)) AS "io:Federal/Estadual:nk",
   CAST(TRUNC(EXTRACT(YEAR FROM "Extract"."Data da Distribuicao (BNDPJ)")) AS BIGINT OR NULL) AS "yr:Data da Distribuicao (BNDPJ):ok"
 FROM "Extract"."Extract" "Extract"
-  INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_3_Group" "Group_1" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_3_Group" "Group_1" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_2_Group" "Group_2" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_2"."Julgamento do merito (completo)")
   INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_1_Group" "Group_3" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_3"."Ato Impugnado")
   LEFT JOIN (
@@ -763,7 +775,7 @@ GROUP BY 1,
   3,
   4
 /* { "tableau-query-origins": { "query-category": "AccelerationView", "lqctx-root-activity-id": "KQoFjNdHEoKLOSB/uzvYXz" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "none:Data da Distribuicao (BNDPJ) (Years):ok"
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "none:Data da Distribuicao (BNDPJ) (Years):ok"
 FROM "Extract"."Extract" "Extract"
 GROUP BY 1
 LIMIT 32
@@ -778,12 +790,12 @@ SELECT "Group_1"."Resultado da Liminar (group)" AS "Resultado da Liminar (group)
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_11_Group" "Group_1" ON ("Extract"."Resultado da Liminar" IS NOT DISTINCT FROM "Group_1"."Resultado da Liminar")
   LEFT JOIN (
-  SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "none:Data da Distribuicao (BNDPJ) (Years):ok",
+  SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "none:Data da Distribuicao (BNDPJ) (Years):ok",
     1 AS "$temp2_output"
   FROM "Extract"."Extract" "Extract"
-  WHERE (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IN ((DATE '1988-01-01'), (DATE '1989-01-01'), (DATE '1990-01-01'), (DATE '1991-01-01'), (DATE '1992-01-01'), (DATE '1993-01-01'), (DATE '1994-01-01'), (DATE '1995-01-01'), (DATE '1996-01-01'), (DATE '1997-01-01'), (DATE '1998-01-01'), (DATE '1999-01-01'), (DATE '2000-01-01')))
+  WHERE (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IN ((DATE '1988-01-01'), (DATE '1989-01-01'), (DATE '1990-01-01'), (DATE '1991-01-01'), (DATE '1992-01-01'), (DATE '1993-01-01'), (DATE '1994-01-01'), (DATE '1995-01-01'), (DATE '1996-01-01'), (DATE '1997-01-01'), (DATE '1998-01-01'), (DATE '1999-01-01'), (DATE '2000-01-01')))
   GROUP BY 1
-) "t0" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) = "t0"."none:Data da Distribuicao (BNDPJ) (Years):ok")
+) "t0" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) = "t0"."none:Data da Distribuicao (BNDPJ) (Years):ok")
 WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Julgamento do merito (completo)" = 'Aguardando Julgamento')) AND (NOT ("Group_1"."Resultado da Liminar (group)" IS NULL)))
 GROUP BY 1,
   5
@@ -849,7 +861,7 @@ FROM "Extract"."Extract" "Extract"
 WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND (CASE WHEN ("Group_1"."Julgamento do merito (agrupado) (copy)" = 'aguardando julgamento (com liminar deferida em parte)') THEN FALSE ELSE TRUE END)) AND ("Group_2"."Resultado da Liminar (group)" = 'Deferida'))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Sort", "lqctx-root-activity-id": "HTRupP9rEBfLUDAcAURCYE" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do merito (agrupado) (copy)",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
   SUM(1) AS "cnt:Classe:ok"
@@ -897,7 +909,7 @@ FROM "Extract"."Extract" "Extract"
 WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND (CASE WHEN (("Group_1"."Resultado da Liminar (group)" IN ('Deferida')) OR ("Group_1"."Resultado da Liminar (group)" IS NULL)) THEN TRUE ELSE FALSE END)) AND (CASE WHEN (((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (completo) (group)" ELSE NULL END) IN ('aguardando julgamento', 'Prejudicada (Decisão Monocrática)', 'Prejudicada (Plenário)')) OR ((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (completo) (group)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "DDjh5G5LkFvJzJp+fAHAHx", "lqctx-batch-query-id": "2" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do merito (agrupado) (copy)",
   SUM(1) AS "cnt:Classe:ok"
 FROM "Extract"."Extract" "Extract"
@@ -921,7 +933,7 @@ FROM "Extract"."Extract" "Extract"
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "DqUhy22sUoHLzNQEoUI1Kj", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do merito (agrupado) (copy)",
   SUM(1) AS "cnt:Classe:ok",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok"
@@ -952,7 +964,7 @@ WHERE ("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE'))
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "AccelerationView", "lqctx-root-activity-id": "K9n4+VeREnAIvAoGfVOEyz" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do merito (agrupado) (copy)",
   SUM(1) AS "cnt:Classe:ok",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok"
@@ -963,7 +975,7 @@ WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "H388z1KEkVsIXcqsUSvGn6", "lqctx-batch-query-id": "2" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Group_1"."Julgamento do merito (completo) (group) 1" AS "Julgamento do merito (completo) (group) 1",
   SUM(1) AS "cnt:Classe:ok",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok"
@@ -973,7 +985,7 @@ WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "HCWiegYKku6KQ1p4xtg8B+", "lqctx-batch-query-id": "2" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do merito (agrupado) (copy)",
   AVG(CAST("Extract"."Duração do processo" AS DOUBLE PRECISION OR NULL)) AS "avg:Duração do processo:ok",
   SUM(1) AS "cnt:Classe:ok",
@@ -987,37 +999,37 @@ GROUP BY 1,
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "MI1b5xKwEYfI6QzxrV2AnQ", "lqctx-batch-query-id": "2" } } */;
 SELECT "Extract"."Julgamento do merito (completo)" AS "Julgamento do merito (completo)"
 FROM "Extract"."Extract" "Extract"
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Resultado da Liminar" IN ('Deferida', 'Deferida "ad referendum"', 'Deferida em Parte'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL) <= (DATE '2012-12-31'))))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Resultado da Liminar" IN ('Deferida', 'Deferida "ad referendum"', 'Deferida em Parte'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL) <= (DATE '2012-12-31'))))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "Bo5/EuxckqnKToM4py7gOy", "lqctx-batch-query-id": "2" } } */;
 SELECT SUM(1) AS "cnt:Classe:ok",
-  CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data do Julgamento do mérito (Years):ok"
+  CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data do Julgamento do mérito (Years):ok"
 FROM "Extract"."Extract" "Extract"
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Julgamento do merito (completo)" IN ('Improcedente (Plenário)', 'Procedente (Plenário)', 'Procedente em Parte (Plenário)')))
 GROUP BY 2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "OJois2b2kYfJewjtfu7cAz", "lqctx-batch-query-id": "0" } } */;
 SELECT "Extract"."Resultado da Liminar" AS "Resultado da Liminar"
 FROM "Extract"."Extract" "Extract"
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (("Extract"."Julgamento do merito (completo)" IN ('Processo findo', 'REAUTUADO')) OR ("Extract"."Julgamento do merito (completo)" IS NULL)) THEN FALSE ELSE TRUE END)) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL) <= (DATE '2012-12-31'))))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (("Extract"."Julgamento do merito (completo)" IN ('Processo findo', 'REAUTUADO')) OR ("Extract"."Julgamento do merito (completo)" IS NULL)) THEN FALSE ELSE TRUE END)) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL) <= (DATE '2012-12-31'))))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "HSXa56jG0FFKfTE3lj9hSq", "lqctx-batch-query-id": "3" } } */;
 SELECT SUM(1) AS "cnt:Classe:ok",
-  CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data da Liminar (Years):ok"
+  CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data da Liminar (Years):ok"
 FROM "Extract"."Extract" "Extract"
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (("Extract"."Julgamento do merito (completo)" IN ('Processo findo', 'REAUTUADO')) OR ("Extract"."Julgamento do merito (completo)" IS NULL)) THEN FALSE ELSE TRUE END) AND ("Extract"."Resultado da Liminar" IN ('Deferida', 'Deferida "ad referendum"', 'Deferida em Parte'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL) <= (DATE '2012-12-31'))))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (("Extract"."Julgamento do merito (completo)" IN ('Processo findo', 'REAUTUADO')) OR ("Extract"."Julgamento do merito (completo)" IS NULL)) THEN FALSE ELSE TRUE END) AND ("Extract"."Resultado da Liminar" IN ('Deferida', 'Deferida "ad referendum"', 'Deferida em Parte'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL) <= (DATE '2012-12-31'))))
 GROUP BY 2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "FWIkqtzZkDwJ7gr446HVZS", "lqctx-batch-query-id": "4" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL) AS "Data da Liminar (Years)"
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL) AS "Data da Liminar (Years)"
 FROM "Extract"."Extract" "Extract"
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (("Extract"."Julgamento do merito (completo)" IN ('Processo findo', 'REAUTUADO')) OR ("Extract"."Julgamento do merito (completo)" IS NULL)) THEN FALSE ELSE TRUE END) AND ("Extract"."Resultado da Liminar" IN ('Deferida', 'Deferida "ad referendum"', 'Deferida em Parte')))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "PmyJOp0i0j7JxfZ9y9BKCj" } } */;
-SELECT COUNT(DISTINCT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL)) AS "ctd:Data da Liminar (Years):ok"
+SELECT COUNT(DISTINCT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL)) AS "ctd:Data da Liminar (Years):ok"
 FROM "Extract"."Extract" "Extract"
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')))
 HAVING (COUNT(1) > 0)
 /* { "tableau-query-origins": { "query-category": "AccelerationView", "lqctx-root-activity-id": "BwsS3LfbUY4K+ZLXt25gJf" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Liminar") AS DATE OR NULL) AS "Data da Liminar (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Liminar")), "Extract"."Data da Liminar") AS DATE OR NULL) AS "Data da Liminar (Years)",
   "Extract"."Julgamento do merito (completo)" AS "Julgamento do merito (completo)",
   "Extract"."Resultado da Liminar" AS "Resultado da Liminar"
 FROM "Extract"."Extract" "Extract"
@@ -1094,7 +1106,7 @@ FROM "Extract"."Extract" "Extract"
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN ("Extract"."Numero" = '588'::double precision) THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "MjNp2An5kBEIYydlq9h7Y/", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Relator em 2013" AS "Relator em 2013",
   SUM(1) AS "cnt:Julgamento do merito (completo):ok"
 FROM "Extract"."Extract" "Extract"
@@ -1102,7 +1114,7 @@ WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND 
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "G+B9reeoEbbI0aUSWaLoWm", "lqctx-batch-query-id": "1" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Relator em 2013" AS "Relator em 2013",
   AVG(CAST("Extract"."Duração do processo" AS DOUBLE PRECISION OR NULL)) AS "avg:Duração do processo:ok",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
@@ -1118,7 +1130,7 @@ FROM "Extract"."Extract" "Extract"
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Julgamento do merito (completo)" = 'Indeferida a inicial (Decisão Monocrática)') AND (CASE WHEN ("Extract"."Numero" = '588'::double precision) THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Sort", "lqctx-root-activity-id": "Lgm8FEvjEBRJpykaysrmNI" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Relator em 2013" AS "Relator em 2013",
   SUM(1) AS "cnt:Julgamento do merito (completo):ok"
 FROM "Extract"."Extract" "Extract"
@@ -1126,7 +1138,7 @@ WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND 
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "Jg1lzNWz0aDJjgxrOlQnEV", "lqctx-batch-query-id": "1" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Relator em 2013" AS "Relator em 2013",
   SUM(1) AS "cnt:Julgamento do merito (completo):ok"
 FROM "Extract"."Extract" "Extract"
@@ -1134,14 +1146,14 @@ WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND 
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "Gwm/Lyc5U6FL4FSYICVJVE", "lqctx-batch-query-id": "2" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Julgamento do merito (completo)" AS "Julgamento do merito (completo)"
 FROM "Extract"."Extract" "Extract"
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN ("Extract"."Numero" = '588'::double precision) THEN FALSE ELSE TRUE END))
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "AccelerationView", "lqctx-root-activity-id": "JTa+EyB8kVgJnFgzFhLfQC" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Relator em 2013" AS "Relator em 2013",
   SUM(1) AS "cnt:Julgamento do merito (completo):ok",
   COUNT("Extract"."Julgamento do merito (procedencia)") AS "cnt:Julgamento do merito (procedencia):ok"
@@ -1178,7 +1190,7 @@ WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND 
 GROUP BY 1,
   4
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "E89ym8CaEmfJrHhV3HDo5P", "lqctx-batch-query-id": "2" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Relator em 2013" AS "Relator em 2013",
   SUM(1) AS "cnt:Julgamento do merito (completo):ok",
   COUNT("Extract"."Julgamento do merito (julgados)") AS "cnt:Julgamento do merito (julgados):ok"
@@ -1187,7 +1199,7 @@ WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND 
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "K2RfcpO8E8QI9JxzZINatT", "lqctx-batch-query-id": "2" } } */;
-SELECT CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data da Distribuicao (BNDPJ) (Years):ok"
+SELECT CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data da Distribuicao (BNDPJ) (Years):ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_5_Group" "Group_1" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_1"."Julgamento do merito (completo)")
 WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ("Group_1"."Julgamento do merito (agrupado) (copy)" = 'Procedente (Plenário)'))
@@ -1196,12 +1208,12 @@ GROUP BY 1
 SELECT "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do merito (agrupado) (copy)"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_5_Group" "Group_1" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_1"."Julgamento do merito (completo)")
-WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END))
+WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "0RowmdfrERDK/4l+FSqKWX", "lqctx-batch-query-id": "0" } } */;
 SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_3_Group' AND r.relkind = 'x';
 SELECT "Extract"."Ato Impugnado" AS "Ato Impugnado",
-  CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+  CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   COUNT("Extract"."Julgamento do merito (completo)") AS "cnt:Julgamento do merito (completo):ok",
   (NOT ("t0"."$temp3_output" IS NULL)) AS "io:Federal/Estadual:nk"
 FROM "Extract"."Extract" "Extract"
@@ -1215,18 +1227,18 @@ FROM "Extract"."Extract" "Extract"
   GROUP BY 1
 ) "t0" ON ("Group_1"."Ato Impugnado (group) 1" = "t0"."Ato Impugnado (group) 1")
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_1_Group" "Group_3" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_3"."Julgamento do merito (completo)")
-WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_3"."Julgamento do merito (agrupado) (copy)" = 'Procedente (Plenário)'))
+WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_3"."Julgamento do merito (agrupado) (copy)" = 'Procedente (Plenário)'))
 GROUP BY 1,
   2,
   4
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "MjYEj/XtkWbIsU5qjjPcue", "lqctx-batch-query-id": "2" } } */;
-SELECT CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data da Distribuicao (BNDPJ) (Years):ok"
+SELECT CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data da Distribuicao (BNDPJ) (Years):ok"
 FROM "Extract"."Extract" "Extract"
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "AccelerationView", "lqctx-root-activity-id": "LfYBBq1UEyBIysELu5NAFQ" } } */;
 SELECT "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do merito (agrupado) (copy)",
-  CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data da Distribuicao (BNDPJ) (Years):ok"
+  CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) AS "yr:Data da Distribuicao (BNDPJ) (Years):ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_1_Group" "Group_1" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_1"."Julgamento do merito (completo)")
 WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')))
@@ -1234,7 +1246,7 @@ GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "AccelerationView", "lqctx-root-activity-id": "H3AKugCgkgpJ3TWgces+Vt" } } */;
 SELECT "Extract"."Ato Impugnado" AS "Ato Impugnado",
-  CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+  CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   COUNT("Extract"."Julgamento do merito (completo)") AS "cnt:Julgamento do merito (completo):ok",
   (NOT ("t0"."$temp3_output" IS NULL)) AS "io:Federal/Estadual:nk",
   AVG("Extract"."Duração do processo") AS "med:Duração do processo:ok"
@@ -1249,7 +1261,7 @@ FROM "Extract"."Extract" "Extract"
   GROUP BY 1
 ) "t0" ON ("Group_1"."Ato Impugnado (group) 1" = "t0"."Ato Impugnado (group) 1")
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_1_Group" "Group_3" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_3"."Julgamento do merito (completo)")
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_3"."Julgamento do merito (agrupado) (copy)" = 'Procedente (Plenário)'))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_3"."Julgamento do merito (agrupado) (copy)" = 'Procedente (Plenário)'))
 GROUP BY 1,
   2,
   4
@@ -1259,11 +1271,11 @@ SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_6_6
 SELECT "Group_1"."Julgamento do merito (completo) (group)" AS "Julgamento do merito (completo) (group)"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_13_Group" "Group_1" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_1"."Julgamento do merito (completo)")
-WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END))
+WHERE (("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "GfD5UcJgEPRKi/++wTwFcZ", "lqctx-batch-query-id": "0" } } */;
 SELECT "Extract"."Ato Impugnado" AS "Ato Impugnado",
-  CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+  CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   AVG(CAST("Extract"."Duração do processo" AS DOUBLE PRECISION OR NULL)) AS "avg:Duração do processo:ok",
   COUNT("Extract"."Julgamento do merito (completo)") AS "cnt:Julgamento do merito (completo):ok",
   (NOT ("t0"."$temp3_output" IS NULL)) AS "io:Federal/Estadual:nk",
@@ -1279,7 +1291,7 @@ FROM "Extract"."Extract" "Extract"
   GROUP BY 1
 ) "t0" ON ("Group_1"."Ato Impugnado (group) 1" = "t0"."Ato Impugnado (group) 1")
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_4_Group" "Group_3" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_3"."Julgamento do merito (completo)")
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_3"."Julgamento do merito (completo) (group)" = 'Procedente (Plenário)'))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_3"."Julgamento do merito (completo) (group)" = 'Procedente (Plenário)'))
 GROUP BY 1,
   2,
   5
@@ -1298,7 +1310,7 @@ FROM "Extract"."Extract" "Extract"
     1 AS "$temp2_import1"
   FROM "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_6_Group" "Group_2"
 ) "t0" ON ("Extract"."Fundamento (Código)" IS NOT DISTINCT FROM "t0"."Fundamento (Código)")
-  INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_5_Group" "Group_3" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_3"."Data da Distribuicao (BNDPJ) (Years)")
+  INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_5_Group" "Group_3" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_3"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_3_Group" "Group_4" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_4"."Ato Impugnado")
   LEFT JOIN (
   SELECT "Group_5"."Ato Impugnado (group) 1" AS "Ato Impugnado (group) 1",
@@ -1313,7 +1325,7 @@ GROUP BY 1,
   2,
   4
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "FLFpdDMO0lVLLCgsUQ7ENs", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Group_1"."Julgamento do merito (completo) (group)" AS "Julgamento do merito (completo) (group)",
   COUNT("Extract"."Julgamento do merito (completo)") AS "cnt:Julgamento do merito (completo):ok",
   (CASE WHEN ("Extract"."Julgamento do merito (completo)" IN ('Procedente (Plenário)', 'Procedente em Parte (Plenário)')) THEN TRUE ELSE FALSE END) AS "io:Set 1:nk"
@@ -1324,7 +1336,7 @@ GROUP BY 1,
   2,
   4
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "PZ+6enfdEy9K4m94lC9zgr", "lqctx-batch-query-id": "1" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Group_1"."Julgamento do merito (completo) (group)" AS "Julgamento do merito (completo) (group)",
   COUNT("Extract"."Julgamento do merito (completo)") AS "cnt:Julgamento do merito (completo):ok",
   (CASE WHEN ("Extract"."Julgamento do merito (completo)" IN ('Procedente (Plenário)', 'Procedente em Parte (Plenário)')) THEN TRUE ELSE FALSE END) AS "io:Set 1:nk"
@@ -1353,11 +1365,11 @@ SELECT "Group_1"."Ato Impugnado (separando os atos estaduais)" AS "Ato Impugnado
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_7_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_4_Group" "Group_2" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_2"."Julgamento do merito (completo)")
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_2"."Julgamento do merito (completo) (group)" = 'Procedente (Plenário)'))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_2"."Julgamento do merito (completo) (group)" = 'Procedente (Plenário)'))
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "DaqYPiCgEjrKhl9P4Xk+TX", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   (CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) AS "Parte (requerente#) (group)",
   COUNT("Extract"."Julgamento do merito (completo)") AS "cnt:Julgamento do merito (completo):ok",
   (NOT ("t0"."$temp3_output" IS NULL)) AS "io:Federal/Estadual:nk"
@@ -1372,7 +1384,7 @@ FROM "Extract"."Extract" "Extract"
   GROUP BY 1
 ) "t0" ON ("Group_1"."Ato Impugnado (group) 1" = "t0"."Ato Impugnado (group) 1")
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_1_Group" "Group_3" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_3"."Julgamento do merito (completo)")
-WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_3"."Julgamento do merito (agrupado) (copy)" = 'Procedente (Plenário)'))
+WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND (CASE WHEN (CAST(TRUNC(EXTRACT(YEAR FROM CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL))) AS BIGINT OR NULL) = 2013) THEN FALSE ELSE TRUE END)) AND ("Group_3"."Julgamento do merito (agrupado) (copy)" = 'Procedente (Plenário)'))
 GROUP BY 1,
   2,
   4
@@ -1476,7 +1488,7 @@ WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "LL/rGJnDkkII6hrToliY2F", "lqctx-batch-query-id": "0" } } */;
 SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_7_Group' AND r.relkind = 'x';
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Extract"."Fundamento (Código)" AS "Fundamento (Código)",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok"
@@ -1487,7 +1499,7 @@ WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AN
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "BQKow1RgEEpIAuKKFzpjRe", "lqctx-batch-query-id": "1" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Extract"."Fundamento (Código)" AS "Fundamento (Código)",
   (CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) AS "Parte (requerente#) (group)",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
@@ -1500,7 +1512,7 @@ GROUP BY 1,
   2,
   3
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "E7y8cIg5EKfK/tVoEANumz", "lqctx-batch-query-id": "1" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Fundamento (Código)" AS "Fundamento (Código)",
   AVG(CAST("Extract"."Duração do processo" AS DOUBLE PRECISION OR NULL)) AS "avg:Duração do processo:ok",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
@@ -1622,7 +1634,7 @@ FROM "Extract"."Extract" "Extract"
 WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Julgamento do merito (julgados)" IN ('Procedente (Plenário)', 'Procedente em Parte (Plenário)')) AND (CASE WHEN ("Extract"."Numero" = '588'::double precision) THEN FALSE ELSE TRUE END) AND ("Extract"."Julgamento do merito (completo)" IN ('Procedente (Plenário)', 'Procedente em Parte (Plenário)'))) AND (CASE WHEN ("Group_2"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND ("Group_3"."Fundamento (Código) (group)" = '2'))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Sort", "lqctx-root-activity-id": "CKRsG+hmUbeIotEQL0OZAn" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Extract"."Fundamento (Código)" AS "Fundamento (Código)",
   AVG(CAST("Extract"."Duração do processo" AS DOUBLE PRECISION OR NULL)) AS "avg:Duração do processo:ok",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
@@ -1651,7 +1663,7 @@ GROUP BY 1,
   6
 HAVING (MIN((CASE ("t0"."$temp1_import1" IS NULL) WHEN TRUE THEN "Extract"."Fundamento (Código)" WHEN FALSE THEN "t0"."Fundamento (Código) (group)" ELSE NULL END)) = '2')
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "LST1IrWpkYYIlna7d+5+BP", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Fundamento (Código)" AS "Fundamento (Código)",
   (CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) AS "Parte (requerente#) (group)",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
@@ -1780,7 +1792,7 @@ FROM "Extract"."Extract" "Extract"
 WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Julgamento do merito (julgados)" IN ('Procedente (Plenário)', 'Procedente em Parte (Plenário)')) AND (CASE WHEN ("Extract"."Numero" = '588'::double precision) THEN FALSE ELSE TRUE END) AND ("Extract"."Julgamento do merito (completo)" IN ('Procedente (Plenário)', 'Procedente em Parte (Plenário)'))) AND ("Group_1"."Fundamento (Código) (group)" = '3')) AND (CASE WHEN ("Group_2"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Sort", "lqctx-root-activity-id": "Gffz3goTEC0JbndiyX/FBr" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Extract"."Fundamento (Código)" AS "Fundamento (Código)",
   AVG(CAST("Extract"."Duração do processo" AS DOUBLE PRECISION OR NULL)) AS "avg:Duração do processo:ok",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
@@ -1809,7 +1821,7 @@ GROUP BY 1,
   6
 HAVING (MIN((CASE ("t0"."$temp1_import1" IS NULL) WHEN TRUE THEN "Extract"."Fundamento (Código)" WHEN FALSE THEN "t0"."Fundamento (Código) (group)" ELSE NULL END)) = '3')
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "IJShgexTUIXLCnVIXSIIUr", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   "Extract"."Fundamento (Código)" AS "Fundamento (Código)",
   (CASE WHEN ("Extract"."Código Requerente" IN ('10', '10.0')) THEN '10' WHEN ("Extract"."Código Requerente" IN ('9.1', '9.1.0', '9.2', '9.2.0')) THEN '9.1' ELSE "Extract"."Código Requerente" END) AS "Parte (requerente#) (group)",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
@@ -1840,7 +1852,7 @@ GROUP BY 1,
 HAVING (MIN((CASE ("t0"."$temp1_import1" IS NULL) WHEN TRUE THEN "Extract"."Fundamento (Código)" WHEN FALSE THEN "t0"."Fundamento (Código) (group)" ELSE NULL END)) = '3')
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "FCdEus7REQEK02yZO1L0y3", "lqctx-batch-query-id": "0" } } */;
 SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_16_Group' AND r.relkind = 'x';
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   (CASE ("t0"."$temp1_import1" IS NULL) WHEN TRUE THEN "Extract"."Fundamento (Código)" WHEN FALSE THEN "t0"."Ressaltar DF" ELSE NULL END) AS "Ressaltar DF",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok",
   (NOT ("t1"."$temp5_output" IS NULL)) AS "io:Federal/Estadual:nk"
@@ -1879,7 +1891,7 @@ SELECT "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do meri
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_1_Group" "Group_1" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_1"."Julgamento do merito (completo)")
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_3_Group" "Group_2" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_2"."Ato Impugnado")
-WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_2"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END))
+WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_2"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "HBiC+eaEEbYKCRu3hUo6y7", "lqctx-batch-query-id": "1" } } */;
 SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_18_Group' AND r.relkind = 'x';
@@ -1893,11 +1905,11 @@ FROM "Extract"."Extract" "Extract"
   FROM "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_18_Group" "Group_1"
 ) "t0" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "t0"."Julgamento do merito (completo)")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_2" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_2"."Ato Impugnado")
-WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN (((CASE ("t0"."$temp2_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp2_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
+WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN (((CASE ("t0"."$temp2_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp2_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "C79phswr0qcKi7zXBuqVQ8", "lqctx-batch-query-id": "0" } } */;
 SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_12_Group' AND r.relkind = 'x';
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   (CASE ("t1"."$temp4_import1" IS NULL) WHEN TRUE THEN "Extract"."Fundamento (Código)" WHEN FALSE THEN "t1"."Ressaltar DF" ELSE NULL END) AS "Ressaltar DF",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok",
   (NOT ("t2"."$temp8_output" IS NULL)) AS "io:Federal/Estadual:nk"
@@ -1924,7 +1936,7 @@ FROM "Extract"."Extract" "Extract"
   WHERE ("Group_5"."Ato Impugnado (group) 1" IN ('1.1.1', '1.1.2', '6.3', '7'))
   GROUP BY 1
 ) "t2" ON ("Group_4"."Ato Impugnado (group) 1" = "t2"."Ato Impugnado (group) 1")
-WHERE ((((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_1"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND (CASE WHEN (((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
+WHERE ((((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_1"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND (CASE WHEN (((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
 GROUP BY 1,
   2,
   4
@@ -1941,19 +1953,19 @@ FROM "Extract"."Extract" "Extract"
   FROM "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_12_Group" "Group_2"
 ) "t0" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "t0"."Julgamento do merito (completo)")
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_13_Group" "Group_3" ON ("Extract"."Fundamento (Código)" IS NOT DISTINCT FROM "Group_3"."Fundamento (Código)")
-WHERE ((((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_1"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND (CASE WHEN (((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
+WHERE ((((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_1"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND (CASE WHEN (((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp3_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Sort", "lqctx-root-activity-id": "0+/G7tU/06iJzYtYPzz9uP" } } */;
 SELECT "Group_1"."Ato Impugnado (group) 1" AS "Ato Impugnado (group) 1"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_3_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01'))))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01'))))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "AccelerationView", "lqctx-root-activity-id": "MGTtdMxqUVtIy79foPxdZg" } } */;
 SELECT "Group_1"."Julgamento do merito (agrupado) (copy)" AS "Julgamento do merito (agrupado) (copy)"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_1_Group" "Group_1" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_1"."Julgamento do merito (completo)")
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01'))))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01'))))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "AccelerationView", "lqctx-root-activity-id": "ITUfo+jwUA2K0LoRgWrTub" } } */;
 SELECT "Group_1"."Ato Impugnado (group) 1" AS "Ato Impugnado (group) 1",
@@ -1961,7 +1973,7 @@ SELECT "Group_1"."Ato Impugnado (group) 1" AS "Ato Impugnado (group) 1",
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_3_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_1_Group" "Group_2" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "Group_2"."Julgamento do merito (completo)")
-WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01'))))
+WHERE ((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01'))))
 GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "AccelerationView", "lqctx-root-activity-id": "BUqn72ZxkhQJN90vaikQqZ" } } */;
@@ -1984,7 +1996,7 @@ FROM "Extract"."Extract" "Extract"
     1 AS "$temp5_import1"
   FROM "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_16_Group" "Group_3"
 ) "t1" ON ("Extract"."Fundamento (Código)" IS NOT DISTINCT FROM "t1"."Fundamento (Código)")
-  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_19_Group" "Group_4" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data do Julgamento do mérito (Years)")
+  INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_19_Group" "Group_4" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data do Julgamento do mérito (Years)")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_5" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_5"."Ato Impugnado")
   LEFT JOIN (
   SELECT "Group_6"."Ato Impugnado (group) 1" AS "Ato Impugnado (group) 1",
@@ -1994,7 +2006,7 @@ FROM "Extract"."Extract" "Extract"
   WHERE ("Group_6"."Ato Impugnado (group) 1" IN ('1.1.1', '1.1.2', '6.3', '7'))
   GROUP BY 1
 ) "t2" ON ("Group_5"."Ato Impugnado (group) 1" = "t2"."Ato Impugnado (group) 1")
-WHERE ((((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_1"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND (CASE WHEN (((CASE ("t0"."$temp4_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp4_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
+WHERE ((((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_1"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND (CASE WHEN (((CASE ("t0"."$temp4_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp4_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
 GROUP BY 1,
   2,
   4
@@ -2008,7 +2020,7 @@ FROM "Extract"."Extract" "Extract"
   FROM "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_18_Group" "Group_1"
 ) "t0" ON ("Extract"."Julgamento do merito (completo)" IS NOT DISTINCT FROM "t0"."Julgamento do merito (completo)")
   INNER JOIN "#Tableau_1_12E68D96-68D8-4C93-BA0B-8BCF360BF3D9_1_Group" "Group_2" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_2"."Ato Impugnado")
-WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN (((CASE ("t0"."$temp2_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'extinto o process (decisão monocrática)', 'Improcedente (Plenário)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp2_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
+WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN (((CASE ("t0"."$temp2_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'extinto o process (decisão monocrática)', 'Improcedente (Plenário)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp2_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "GrVRXI9ZUKRImMCxfH57eA", "lqctx-batch-query-id": "0" } } */;
 SELECT 1 FROM pg_class r WHERE r.relnamespace = 42 AND r.relname = '#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_9_Group' AND r.relkind = 'x';
@@ -2034,7 +2046,7 @@ FROM "Extract"."Extract" "Extract"
     1 AS "$temp5_import1"
   FROM "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_11_Group" "Group_3"
 ) "t1" ON ("Extract"."Fundamento (Código)" IS NOT DISTINCT FROM "t1"."Fundamento (Código)")
-  INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_10_Group" "Group_4" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data do Julgamento do mérito (Years)")
+  INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_10_Group" "Group_4" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_4"."Data do Julgamento do mérito (Years)")
   INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_4_Group" "Group_5" ON ("Extract"."Resultado da Liminar" IS NOT DISTINCT FROM "Group_5"."Resultado da Liminar")
   LEFT JOIN (
   SELECT "Group_7"."Ressaltar DF" AS "$temp9_output",
@@ -2057,7 +2069,7 @@ FROM "Extract"."Extract" "Extract"
   WHERE ("Group_9"."Ato Impugnado (group) 1" IN ('1.1.1', '1.1.2', '6.3', '7'))
   GROUP BY 1
 ) "t4" ON ("Group_8"."Ato Impugnado (group) 1" = "t4"."Ato Impugnado (group) 1")
-WHERE ((((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_1"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND (CASE WHEN (((CASE ("t0"."$temp4_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'extinto o process (decisão monocrática)', 'Improcedente (Plenário)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp4_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
+WHERE ((((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31'))) AND ((CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) >= (DATE '1988-01-01')) AND (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) <= (DATE '2013-01-01')))) AND (CASE WHEN ("Group_1"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND (CASE WHEN (((CASE ("t0"."$temp4_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IN ('aguardando julgamento', 'aguardando julgamento (com liminar deferida em parte)', 'extinto o process (decisão monocrática)', 'Improcedente (Plenário)', 'Prejudicada (Decisão Monocrática)')) OR ((CASE ("t0"."$temp4_import1" IS NULL) WHEN TRUE THEN "Extract"."Julgamento do merito (completo)" WHEN FALSE THEN "t0"."Julgamento do merito (agrupado) (copy)" ELSE NULL END) IS NULL)) THEN FALSE ELSE TRUE END))
 GROUP BY 1,
   2,
   4,
@@ -2221,7 +2233,7 @@ FROM "Extract"."Extract" "Extract"
     1 AS "$temp2_import1"
   FROM "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_8_Group" "Group_2"
 ) "t0" ON ("Extract"."Fundamento (Código)" IS NOT DISTINCT FROM "t0"."Fundamento (Código)")
-  INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_10_Group" "Group_3" ON (CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_3"."Data do Julgamento do mérito (Years)")
+  INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_10_Group" "Group_3" ON (CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) IS NOT DISTINCT FROM "Group_3"."Data do Julgamento do mérito (Years)")
   INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_14_Group" "Group_4" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_4"."Requerente")
   INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_1_Group" "Group_5" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_5"."Ato Impugnado")
   LEFT JOIN (
@@ -2247,7 +2259,7 @@ FROM "Extract"."Extract" "Extract"
 WHERE (((("Extract"."Classe" IN ('ADI', 'ADI (Med. Liminar)', 'falta', 'NE')) AND ("Extract"."Data da Distribuicao (BNDPJ)" >= (DATE '1988-10-01')) AND ("Extract"."Data da Distribuicao (BNDPJ)" <= (DATE '2012-12-31')) AND ("Extract"."Julgamento do merito (julgados)" IN ('Procedente (Plenário)', 'Procedente em Parte (Plenário)')) AND (CASE WHEN ("Extract"."Numero" = '588'::double precision) THEN FALSE ELSE TRUE END) AND ("Extract"."Julgamento do merito (completo)" IN ('Procedente (Plenário)', 'Procedente em Parte (Plenário)'))) AND (CASE WHEN ("Group_2"."Ato Impugnado (group) 1" = '0') THEN FALSE ELSE TRUE END)) AND ("Group_3"."Fundamento (Código) (group)" = '4'))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Sort", "lqctx-root-activity-id": "H0/gYvE5081Jl/bDGecrFR" } } */;
-SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   "Group_3"."Requerente (group)" AS "Requerente (group)",
   AVG(CAST("Extract"."Duração do processo" AS DOUBLE PRECISION OR NULL)) AS "avg:Duração do processo:ok",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
@@ -2358,7 +2370,7 @@ GROUP BY 1,
   4
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "Egs2OcRkEuJJoJQlMkb3hk", "lqctx-batch-query-id": "0" } } */;
 SELECT "Group_1"."Beneficiados (group) (copy)" AS "Beneficiados (group) (copy)",
-  CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
+  CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "Data da Distribuicao (BNDPJ) (Years)",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_3_F7E47D86-957B-44B6-8723-371A2049C966_16_Group" "Group_1" ON ("Extract"."Beneficiados (2)" IS NOT DISTINCT FROM "Group_1"."Beneficiados (2)")
@@ -2369,7 +2381,7 @@ GROUP BY 1,
   2
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "IhLEzqFsEOlJnkGBvvKmWq", "lqctx-batch-query-id": "1" } } */;
 SELECT "Group_1"."Beneficiados (group) (copy)" AS "Beneficiados (group) (copy)",
-  CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
+  CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "Data do Julgamento do mérito (Years)",
   COUNT("Extract"."Numero") AS "cnt:Numero:ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_6_69D531B1-F672-4A8D-BA00-C8289C7EB494_14_Group" "Group_1" ON ("Extract"."Beneficiados (2)" IS NOT DISTINCT FROM "Group_1"."Beneficiados (2)")

@@ -2,16 +2,16 @@ SELECT SUM(1) AS "cnt:TEMP(row count)(290714814)(0):qk"
 FROM "Extract"."Extract" "Extract"
 HAVING (COUNT(1) > 0)
 /* { "tableau-query-origins": { "query-category": "RowCount", "lqctx-root-activity-id": "DlLRnHXxUkwIte5QkHjfFI" } } */;
-SELECT CAST(TRUNC(EXTRACT(HOUR FROM "Extract"."time")) AS BIGINT OR NULL) AS "hr:time:ok"
+SELECT CAST(TRUNC(EXTRACT(HOUR FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) AS "hr:time:ok"
 FROM "Extract"."Extract" "Extract"
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "Gqr1hvWvESOK1KqKUa2xHV", "lqctx-batch-query-id": "0" } } */;
-SELECT CAST(TRUNC(EXTRACT(HOUR FROM "Extract"."time")) AS BIGINT OR NULL) AS "TEMP(Domain)"
+SELECT CAST(TRUNC(EXTRACT(HOUR FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) AS "TEMP(Domain)"
 FROM "Extract"."Extract" "Extract"
 GROUP BY 1
 LIMIT 32
 /* { "tableau-query-origins": { "query-category": "Unknown", "lqctx-root-activity-id": "FdvGQcJikzAKCnoSfwIrR+" } } */;
-SELECT (((CAST(TRUNC(EXTRACT(YEAR FROM "Extract"."time")) AS BIGINT OR NULL) * 10000) + (CAST(TRUNC(EXTRACT(MONTH FROM "Extract"."time")) AS BIGINT OR NULL) * 100)) + CAST(TRUNC(EXTRACT(DAY FROM "Extract"."time")) AS BIGINT OR NULL)) AS "TEMP(Domain)"
+SELECT (((CAST(TRUNC(EXTRACT(YEAR FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) * 10000) + (CAST(TRUNC(EXTRACT(MONTH FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) * 100)) + CAST(TRUNC(EXTRACT(DAY FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL)) AS "TEMP(Domain)"
 FROM "Extract"."Extract" "Extract"
 GROUP BY 1
 LIMIT 32
@@ -129,11 +129,11 @@ SELECT ("Extract"."#fmc_vav_ac_1_PackageUnit_measure_heartbeat_alive_real_path" 
   SUM("Extract"."AC2-ThermalSpaceExcursionValidator_clg_#fmc_vav_3_38_VAVC_Space") AS "sum:AC2-ThermalSpaceExcursionValidator_clg_#fmc_vav_3_38_VAVC_Space:ok",
   "Extract"."time" AS "time"
 FROM "Extract"."Extract" "Extract"
-WHERE (((CAST(TRUNC(EXTRACT(HOUR FROM "Extract"."time")) AS BIGINT OR NULL) IN (7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)) AND (CASE WHEN ((((CAST(TRUNC(EXTRACT(YEAR FROM "Extract"."time")) AS BIGINT OR NULL) * 10000) + (CAST(TRUNC(EXTRACT(MONTH FROM "Extract"."time")) AS BIGINT OR NULL) * 100)) + CAST(TRUNC(EXTRACT(DAY FROM "Extract"."time")) AS BIGINT OR NULL)) IN (20140512, 20140513, 20140514, 20140515, 20140516, 20140517, 20140518, 20140519, 20140520, 20140608, 20140609, 20140610)) THEN FALSE ELSE TRUE END)) AND (("Extract"."#fmc_vav_ac_1_PackageUnit_measure_heartbeat_alive_real_path" || "Extract"."#fmc_vav_ac_2_PackageUnit_measure_heartbeat_alive_real_path") IN ('1.0001.000', 'nannan')))
+WHERE (((CAST(TRUNC(EXTRACT(HOUR FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) IN (7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)) AND (CASE WHEN ((((CAST(TRUNC(EXTRACT(YEAR FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) * 10000) + (CAST(TRUNC(EXTRACT(MONTH FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) * 100)) + CAST(TRUNC(EXTRACT(DAY FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL)) IN (20140512, 20140513, 20140514, 20140515, 20140516, 20140517, 20140518, 20140519, 20140520, 20140608, 20140609, 20140610)) THEN FALSE ELSE TRUE END)) AND (("Extract"."#fmc_vav_ac_1_PackageUnit_measure_heartbeat_alive_real_path" || "Extract"."#fmc_vav_ac_2_PackageUnit_measure_heartbeat_alive_real_path") IN ('1.0001.000', 'nannan')))
 GROUP BY 1,
   112
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "FdvGQcJikzAKCnoSfwIrR+", "lqctx-batch-query-id": "1" } } */;
-SELECT (1 + CAST(TRUNC(DATE_PART('DOW', "Extract"."time")) AS BIGINT OR NULL)) AS "wd:time:ok"
+SELECT (1 + CAST(TRUNC(DATE_PART('DOW', TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL)) AS "wd:time:ok"
 FROM "Extract"."Extract" "Extract"
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "Po+vwukZ0qsIzdhte+d338", "lqctx-batch-query-id": "1" } } */;
@@ -248,6 +248,6 @@ SELECT ("Extract"."#fmc_vav_ac_1_PackageUnit_measure_heartbeat_alive_real_path" 
   AVG(CAST("Extract"."AC2-ThermalSpaceExcursionValidator_clg_#fmc_vav_3_37_VAVR_Space" AS DOUBLE PRECISION OR NULL)) AS "avg:AC2-ThermalSpaceExcursionValidator_clg_#fmc_vav_3_37_VAVR_Space:ok",
   AVG(CAST("Extract"."AC2-ThermalSpaceExcursionValidator_clg_#fmc_vav_3_38_VAVC_Space" AS DOUBLE PRECISION OR NULL)) AS "avg:AC2-ThermalSpaceExcursionValidator_clg_#fmc_vav_3_38_VAVC_Space:ok"
 FROM "Extract"."Extract" "Extract"
-WHERE (((CAST(TRUNC(EXTRACT(HOUR FROM "Extract"."time")) AS BIGINT OR NULL) IN (8, 9, 10, 11, 12, 13, 14, 15, 16, 17)) AND (CASE WHEN ((((CAST(TRUNC(EXTRACT(YEAR FROM "Extract"."time")) AS BIGINT OR NULL) * 10000) + (CAST(TRUNC(EXTRACT(MONTH FROM "Extract"."time")) AS BIGINT OR NULL) * 100)) + CAST(TRUNC(EXTRACT(DAY FROM "Extract"."time")) AS BIGINT OR NULL)) IN (20140512, 20140513, 20140514, 20140515, 20140516, 20140517, 20140518, 20140519, 20140520, 20140608, 20140609, 20140610)) THEN FALSE ELSE TRUE END) AND ((1 + CAST(TRUNC(DATE_PART('DOW', "Extract"."time")) AS BIGINT OR NULL)) >= 2) AND ((1 + CAST(TRUNC(DATE_PART('DOW', "Extract"."time")) AS BIGINT OR NULL)) <= 6)) AND (("Extract"."#fmc_vav_ac_1_PackageUnit_measure_heartbeat_alive_real_path" || "Extract"."#fmc_vav_ac_2_PackageUnit_measure_heartbeat_alive_real_path") IN ('1.0001.000', 'nannan')))
+WHERE (((CAST(TRUNC(EXTRACT(HOUR FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) IN (8, 9, 10, 11, 12, 13, 14, 15, 16, 17)) AND (CASE WHEN ((((CAST(TRUNC(EXTRACT(YEAR FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) * 10000) + (CAST(TRUNC(EXTRACT(MONTH FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL) * 100)) + CAST(TRUNC(EXTRACT(DAY FROM TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL)) IN (20140512, 20140513, 20140514, 20140515, 20140516, 20140517, 20140518, 20140519, 20140520, 20140608, 20140609, 20140610)) THEN FALSE ELSE TRUE END) AND ((1 + CAST(TRUNC(DATE_PART('DOW', TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL)) >= 2) AND ((1 + CAST(TRUNC(DATE_PART('DOW', TABLEAU.NORMALIZE_DATETIME("Extract"."time"))) AS BIGINT OR NULL)) <= 6)) AND (("Extract"."#fmc_vav_ac_1_PackageUnit_measure_heartbeat_alive_real_path" || "Extract"."#fmc_vav_ac_2_PackageUnit_measure_heartbeat_alive_real_path") IN ('1.0001.000', 'nannan')))
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "M02u3eEgEkvLx3fsLRVfcd", "lqctx-batch-query-id": "2" } } */;

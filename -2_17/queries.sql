@@ -46,7 +46,7 @@ SELECT "t3"."Calculation_9960813182850830" AS "Calculation_9960813182850830",
 FROM (
   SELECT (CASE WHEN ("t2"."$temp0_cse" <= 17) THEN 'менее 18' WHEN (("t2"."$temp0_cse" >= 18) AND ("t2"."$temp0_cse" <= 24)) THEN '18-24' WHEN (("t2"."$temp0_cse" >= 25) AND ("t2"."$temp0_cse" <= 34)) THEN '25-34' WHEN (("t2"."$temp0_cse" >= 35) AND ("t2"."$temp0_cse" <= 44)) THEN '35-44' WHEN (("t2"."$temp0_cse" >= 45) AND ("t2"."$temp0_cse" <= 54)) THEN '45-54' WHEN (("t2"."$temp0_cse" >= 55) AND ("t2"."$temp0_cse" <= 90)) THEN '55 и выше' ELSE '' END) AS "Calculation_9960813182850830"
   FROM (
-    SELECT (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    SELECT (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
     FROM (
       SELECT "t0"."$temp1_cse" AS "$temp1_cse",
         "t0"."$temp3_cse" AS "$temp3_cse",
@@ -54,8 +54,8 @@ FROM (
         CAST("t0"."$temp3_cse" AS TEXT OR NULL) COLLATE "ru" AS "$temp2_cse"
       FROM (
         SELECT "Extract"."bdate" AS "bdate",
-          "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-          "Extract"."bdate" COLLATE "ru" AS "$temp3_cse"
+          CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+          TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse"
         FROM "Extract"."Extract" "Extract"
         WHERE (CASE WHEN ("Extract"."sex" = 0) THEN FALSE ELSE TRUE END)
       ) "t0"
@@ -70,7 +70,7 @@ SELECT "t3"."Calculation_9960813182850830" AS "Calculation_9960813182850830",
 FROM (
   SELECT (CASE WHEN ("t2"."$temp0_cse" <= 17) THEN 'менее 18' WHEN (("t2"."$temp0_cse" >= 18) AND ("t2"."$temp0_cse" <= 24)) THEN '18-24' WHEN (("t2"."$temp0_cse" >= 25) AND ("t2"."$temp0_cse" <= 34)) THEN '25-34' WHEN (("t2"."$temp0_cse" >= 35) AND ("t2"."$temp0_cse" <= 44)) THEN '35-44' WHEN (("t2"."$temp0_cse" >= 45) AND ("t2"."$temp0_cse" <= 54)) THEN '45-54' WHEN (("t2"."$temp0_cse" >= 55) AND ("t2"."$temp0_cse" <= 90)) THEN '55 и выше' ELSE '' END) AS "Calculation_9960813182850830"
   FROM (
-    SELECT (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    SELECT (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
     FROM (
       SELECT "t0"."$temp1_cse" AS "$temp1_cse",
         "t0"."$temp3_cse" AS "$temp3_cse",
@@ -78,8 +78,8 @@ FROM (
         CAST("t0"."$temp3_cse" AS TEXT OR NULL) COLLATE "ru" AS "$temp2_cse"
       FROM (
         SELECT "Extract"."bdate" AS "bdate",
-          "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-          "Extract"."bdate" COLLATE "ru" AS "$temp3_cse"
+          CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+          TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse"
         FROM "Extract"."Extract" "Extract"
         WHERE (CASE WHEN ("Extract"."sex" = 0) THEN FALSE ELSE TRUE END)
       ) "t0"
@@ -108,6 +108,10 @@ FROM "Extract"."Extract" "Extract"
 WHERE (CASE WHEN ("Extract"."sex" = 0) THEN FALSE ELSE TRUE END)
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "Data", "lqctx-root-activity-id": "BF3ZOQPIETAJWis3zOpzB3", "lqctx-batch-query-id": "0" } } */;
+CREATE DATABASE "/var/folders/ng/0nxfxjxn22v42bnhwb3wqd5r0000gn/T/tableau-temp/#TableauTemp_0nhygbz0k5zjgr1cd80wo14kjqrk.hyper";
+CREATE SCHEMA "TableauTemp";
+UNLOAD DATABASE "/var/folders/ng/0nxfxjxn22v42bnhwb3wqd5r0000gn/T/tableau-temp/#TableauTemp_0nhygbz0k5zjgr1cd80wo14kjqrk.hyper";
+UNLOAD RELEASE;
 SELECT "t2"."Country (group)" AS "Country (group)",
   '1'::double precision AS "avg:Calculation_5610825182816355:ok",
   SUM(1) AS "cnt:Calculation_5610825182816355:ok",
@@ -115,7 +119,7 @@ SELECT "t2"."Country (group)" AS "Country (group)",
   SUM(1) AS "sum:Number of Records:ok"
 FROM (
   SELECT "t1"."Country (group)" AS "Country (group)",
-    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
   FROM (
     SELECT "t0"."Country (group)" AS "Country (group)",
       "t0"."$temp1_cse" AS "$temp1_cse",
@@ -124,8 +128,8 @@ FROM (
       CAST("t0"."$temp3_cse" AS TEXT OR NULL) COLLATE "ru" AS "$temp2_cse"
     FROM (
       SELECT "Extract"."bdate" AS "bdate",
-        "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-        "Extract"."bdate" COLLATE "ru" AS "$temp3_cse",
+        CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+        TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse",
         (CASE WHEN ("Extract"."country" IN ('Германия', 'Germany')) THEN 'Germany' WHEN ("Extract"."country" IN ('Россия', 'Russia', 'RUSSIAN_FEDERATION')) THEN 'Russia' WHEN ("Extract"."country" IN ('Украина', 'UKRAINE')) THEN 'UKRAINE' ELSE "Extract"."country" END) AS "Country (group)"
       FROM "Extract"."Extract" "Extract"
       WHERE (CASE WHEN ("Extract"."sex" = 0) THEN FALSE ELSE TRUE END)
@@ -139,7 +143,7 @@ SELECT "t2"."sex" AS "sex",
   SUM(1) AS "sum:Number of Records:ok"
 FROM (
   SELECT "t1"."sex" AS "sex",
-    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
   FROM (
     SELECT "t0"."$temp1_cse" AS "$temp1_cse",
       "t0"."$temp3_cse" AS "$temp3_cse",
@@ -149,8 +153,8 @@ FROM (
     FROM (
       SELECT "Extract"."bdate" AS "bdate",
         "Extract"."sex" AS "sex",
-        "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-        "Extract"."bdate" COLLATE "ru" AS "$temp3_cse"
+        CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+        TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse"
       FROM "Extract"."Extract" "Extract"
       WHERE (CASE WHEN ("Extract"."sex" = 0) THEN FALSE ELSE TRUE END)
     ) "t0"
@@ -165,7 +169,7 @@ SELECT "t2"."mongo_profiles_raw_answer (group)" AS "mongo_profiles_raw_answer (g
   SUM(1) AS "sum:Number of Records:ok"
 FROM (
   SELECT "t1"."mongo_profiles_raw_answer (group)" AS "mongo_profiles_raw_answer (group)",
-    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
   FROM (
     SELECT "t0"."bdate" AS "bdate",
       "t0"."$temp3_cse" AS "$temp3_cse",
@@ -174,8 +178,8 @@ FROM (
       CAST("t0"."$temp3_cse" AS TEXT OR NULL) COLLATE "ru" AS "$temp2_cse"
     FROM (
       SELECT "Extract"."bdate" AS "bdate",
-        "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-        "Extract"."bdate" COLLATE "ru" AS "$temp3_cse",
+        CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+        TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse",
         "Group_1"."mongo_profiles_raw_answer (group)" AS "mongo_profiles_raw_answer (group)"
       FROM "Extract"."Extract" "Extract"
         INNER JOIN "#Tableau_1_12161D6D-2D81-47E0-9FF4-016A39BF5379_1_Group" "Group_1" ON ("Extract"."answer" = "Group_1"."answer")
@@ -193,7 +197,7 @@ SELECT "t2"."City (group)" AS "City (group)",
   SUM(1) AS "sum:Number of Records:ok"
 FROM (
   SELECT "t1"."City (group)" AS "City (group)",
-    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
   FROM (
     SELECT "t0"."City (group)" AS "City (group)",
       "t0"."bdate" AS "bdate",
@@ -202,8 +206,8 @@ FROM (
       CAST("t0"."$temp3_cse" AS TEXT OR NULL) COLLATE "ru" AS "$temp2_cse"
     FROM (
       SELECT "Extract"."bdate" AS "bdate",
-        "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-        "Extract"."bdate" COLLATE "ru" AS "$temp3_cse",
+        CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+        TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse",
         "Group_1"."City (group)" AS "City (group)"
       FROM "Extract"."Extract" "Extract"
         INNER JOIN "#Tableau_8_B3B634A6-5F61-41F4-BE1B-A611956ED875_1_Group" "Group_1" ON ("Extract"."city" = "Group_1"."city")
@@ -218,7 +222,7 @@ SELECT "t2"."sex" AS "sex",
   SUM(1) AS "sum:Number of Records:ok"
 FROM (
   SELECT "t1"."sex" AS "sex",
-    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
   FROM (
     SELECT "t0"."$temp1_cse" AS "$temp1_cse",
       "t0"."$temp3_cse" AS "$temp3_cse",
@@ -228,8 +232,8 @@ FROM (
     FROM (
       SELECT "Extract"."bdate" AS "bdate",
         "Extract"."sex" AS "sex",
-        "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-        "Extract"."bdate" COLLATE "ru" AS "$temp3_cse"
+        CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+        TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse"
       FROM "Extract"."Extract" "Extract"
       WHERE (CASE WHEN ("Extract"."sex" = 0) THEN FALSE ELSE TRUE END)
     ) "t0"
@@ -245,7 +249,7 @@ SELECT "t2"."City (group)" AS "City (group)",
   SUM(1) AS "sum:Number of Records:ok"
 FROM (
   SELECT "t1"."City (group)" AS "City (group)",
-    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
   FROM (
     SELECT "t0"."City (group)" AS "City (group)",
       "t0"."bdate" AS "bdate",
@@ -254,8 +258,8 @@ FROM (
       CAST("t0"."$temp3_cse" AS TEXT OR NULL) COLLATE "ru" AS "$temp2_cse"
     FROM (
       SELECT "Extract"."bdate" AS "bdate",
-        "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-        "Extract"."bdate" COLLATE "ru" AS "$temp3_cse",
+        CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+        TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse",
         "Group_1"."City (group)" AS "City (group)"
       FROM "Extract"."Extract" "Extract"
         INNER JOIN "#Tableau_8_B3B634A6-5F61-41F4-BE1B-A611956ED875_1_Group" "Group_1" ON ("Extract"."city" = "Group_1"."city")
@@ -273,7 +277,7 @@ SELECT "t2"."Country (group)" AS "Country (group)",
   SUM(1) AS "sum:Number of Records:ok"
 FROM (
   SELECT "t1"."Country (group)" AS "Country (group)",
-    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
   FROM (
     SELECT "t0"."Country (group)" AS "Country (group)",
       "t0"."$temp1_cse" AS "$temp1_cse",
@@ -282,8 +286,8 @@ FROM (
       CAST("t0"."$temp3_cse" AS TEXT OR NULL) COLLATE "ru" AS "$temp2_cse"
     FROM (
       SELECT "Extract"."bdate" AS "bdate",
-        "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-        "Extract"."bdate" COLLATE "ru" AS "$temp3_cse",
+        CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+        TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse",
         (CASE WHEN ("Extract"."country" IN ('Германия', 'Germany')) THEN 'Germany' WHEN ("Extract"."country" IN ('Россия', 'Russia', 'RUSSIAN_FEDERATION')) THEN 'Russia' WHEN ("Extract"."country" IN ('Украина', 'UKRAINE')) THEN 'UKRAINE' ELSE "Extract"."country" END) AS "Country (group)"
       FROM "Extract"."Extract" "Extract"
       WHERE (CASE WHEN ("Extract"."sex" = 0) THEN FALSE ELSE TRUE END)
@@ -298,7 +302,7 @@ SELECT "t2"."mongo_profiles_raw_answer (group)" AS "mongo_profiles_raw_answer (g
   SUM(1) AS "sum:Number of Records:ok"
 FROM (
   SELECT "t1"."mongo_profiles_raw_answer (group)" AS "mongo_profiles_raw_answer (group)",
-    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN 1 ELSE null::int END) AS "$temp0_cse"
+    (CASE WHEN (LENGTH("t1"."bdate") >= 8) THEN TABLEAU.DATE_DIFF('YEAR', CURRENT_DATE, TABLEAU.DATEPARSE('dd/mm/yyyy', (((((CASE WHEN (LENGTH("t1"."$temp1_cse") = 1) THEN ('0' || "t1"."$temp1_cse") COLLATE "ru" ELSE "t1"."$temp1_cse" END) COLLATE "ru" || '/') COLLATE "ru" || (CASE WHEN (LENGTH("t1"."$temp2_cse") = 1) THEN ('0' || "t1"."$temp2_cse") COLLATE "ru" ELSE "t1"."$temp3_cse" END) COLLATE "ru") COLLATE "ru" || '/') COLLATE "ru" || TABLEAU.RIGHT("t1"."bdate",4) COLLATE "ru") COLLATE "ru")) ELSE null::int END) AS "$temp0_cse"
   FROM (
     SELECT "t0"."bdate" AS "bdate",
       "t0"."$temp3_cse" AS "$temp3_cse",
@@ -307,8 +311,8 @@ FROM (
       CAST("t0"."$temp3_cse" AS TEXT OR NULL) COLLATE "ru" AS "$temp2_cse"
     FROM (
       SELECT "Extract"."bdate" AS "bdate",
-        "Extract"."bdate" COLLATE "ru" AS "$temp1_cse",
-        "Extract"."bdate" COLLATE "ru" AS "$temp3_cse",
+        CAST(TABLEAU.LEFT("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') - 1)) COLLATE "ru" AS TEXT OR NULL) COLLATE "ru" AS "$temp1_cse",
+        TABLEAU.LEFT(TABLEAU.MID("Extract"."bdate",(TABLEAU.FIND("Extract"."bdate", '/') + 1)),((TABLEAU.FIND("Extract"."bdate", '/', INT4LARGER(1, CAST(FLOOR(4) AS INTEGER OR NULL))) - TABLEAU.FIND("Extract"."bdate", '/')) - 1)) COLLATE "ru" AS "$temp3_cse",
         "Group_1"."mongo_profiles_raw_answer (group)" AS "mongo_profiles_raw_answer (group)"
       FROM "Extract"."Extract" "Extract"
         INNER JOIN "#Tableau_7_C2CAC516-813D-4D0C-8385-3BA138E3FF82_2_Group" "Group_1" ON ("Extract"."answer" = "Group_1"."answer")

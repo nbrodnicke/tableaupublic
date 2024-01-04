@@ -22,8 +22,8 @@ ORDER BY "Description" ASC NULLS FIRST
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "BKUzcZXnkghIHlmPQpXiQw", "lqctx-batch-query-id": "2" } } */;
 SELECT "Extract"."Description" AS "Description",
   "Extract"."Make" AS "Make",
-  MIN("Extract"."Issued Date") AS "TEMP(attr:Issued Date:ok)(2336791653)(0)",
-  MAX("Extract"."Issued Date") AS "TEMP(attr:Issued Date:ok)(2541694855)(0)",
+  MIN(TABLEAU.NORMALIZE_DATETIME("Extract"."Issued Date")) AS "TEMP(attr:Issued Date:ok)(2336791653)(0)",
+  MAX(TABLEAU.NORMALIZE_DATETIME("Extract"."Issued Date")) AS "TEMP(attr:Issued Date:ok)(2541694855)(0)",
   COUNT("Extract"."Citation #") AS "cnt:Citation #:ok",
   SUM("Extract"."Fine") AS "sum:Fine:ok",
   SUM("Extract"."Penalty") AS "sum:Penalty:ok"
@@ -77,7 +77,7 @@ WHERE (("Extract"."Link" IS NOT DISTINCT FROM "t0"."Link") AND ("Extract"."Locat
 GROUP BY 1
 /* { "tableau-query-origins": { "query-category": "QuickFilter", "lqctx-root-activity-id": "HdmirtOA0vVK9ghH5eVVWp", "lqctx-batch-query-id": "0" } } */;
 SELECT COUNT("Extract"."Citation #") AS "cnt:Citation #:ok",
-  CAST(TRUNC(EXTRACT(MONTH FROM "Extract"."Issued Date")) AS BIGINT OR NULL) AS "mn:Issued Date:ok",
+  CAST(TRUNC(EXTRACT(MONTH FROM TABLEAU.NORMALIZE_DATETIME("Extract"."Issued Date"))) AS BIGINT OR NULL) AS "mn:Issued Date:ok",
   SUM("Extract"."Fine") AS "sum:Fine:ok",
   SUM("Extract"."Penalty") AS "sum:Penalty:ok"
 FROM "Extract"."Extract" "Extract"

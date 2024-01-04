@@ -11,7 +11,7 @@ FROM (
   SELECT "t0"."$temp0_cse" AS "Data da Distribuicao (BNDPJ) (Years) (group)",
     "t0"."$temp0_cse" AS "Data da Distribuicao (BNDPJ) (Years)"
   FROM (
-    SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "$temp0_cse"
+    SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "$temp0_cse"
     FROM "Extract"."Extract" "Extract"
   ) "t0"
 ) "t1"
@@ -38,7 +38,7 @@ FROM (
   SELECT "t0"."$temp0_cse" AS "Data do Julgamento do mérito (Years) (grupo)",
     "t0"."$temp0_cse" AS "Data do Julgamento do mérito (Years)"
   FROM (
-    SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "$temp0_cse"
+    SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "$temp0_cse"
     FROM "Extract"."Extract" "Extract"
   ) "t0"
 ) "t1"
@@ -75,7 +75,7 @@ FROM (
   SELECT "t0"."$temp0_cse" AS "Data da Distribuicao (BNDPJ) (Years) (group)",
     "t0"."$temp0_cse" AS "Data da Distribuicao (BNDPJ) (Years)"
   FROM (
-    SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "$temp0_cse"
+    SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "$temp0_cse"
     FROM "Extract"."Extract" "Extract"
   ) "t0"
 ) "t1"
@@ -134,7 +134,7 @@ FROM (
   SELECT "t0"."$temp0_cse" AS "Data da Distribuicao (BNDPJ) (Years)",
     "t0"."$temp0_cse" AS "Fases dos processos"
   FROM (
-    SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "$temp0_cse"
+    SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "$temp0_cse"
     FROM "Extract"."Extract" "Extract"
   ) "t0"
 ) "t1"
@@ -216,7 +216,7 @@ FROM (
   SELECT "t0"."$temp0_cse" AS "Data da Distribuicao (BNDPJ) (Years) (group)",
     "t0"."$temp0_cse" AS "Data da Distribuicao (BNDPJ) (Years)"
   FROM (
-    SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "$temp0_cse"
+    SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS DATE OR NULL) AS "$temp0_cse"
     FROM "Extract"."Extract" "Extract"
   ) "t0"
 ) "t1"
@@ -303,7 +303,7 @@ FROM (
   SELECT "t0"."$temp0_cse" AS "Data do Julgamento do mérito (Years) (grupo) 1",
     "t0"."$temp0_cse" AS "Data do Julgamento do mérito (Years)"
   FROM (
-    SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "$temp0_cse"
+    SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "$temp0_cse"
     FROM "Extract"."Extract" "Extract"
   ) "t0"
 ) "t1"
@@ -320,7 +320,7 @@ FROM (
   SELECT "t0"."$temp0_cse" AS "Data do Julgamento do mérito (Years) (grupo) 1",
     "t0"."$temp0_cse" AS "Data do Julgamento do mérito (Years)"
   FROM (
-    SELECT CAST(DATE_TRUNC('YEAR', "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "$temp0_cse"
+    SELECT CAST(TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data do Julgamento do mérito")), "Extract"."Data do Julgamento do mérito") AS DATE OR NULL) AS "$temp0_cse"
     FROM "Extract"."Extract" "Extract"
   ) "t0"
 ) "t1"

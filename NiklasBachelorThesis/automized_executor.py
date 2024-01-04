@@ -24,7 +24,7 @@ file_count = 0
 
 for input_file in twbx_files:
     file_count += 1
-    print(f"Currently the current workbook is being analyzed: {input_file}.")
+    print(f"Currently this workbook is being analyzed: {input_file}.")
     terminal_command = f'unzip -d {tmp_directory} -- "{input_file}"'
 
     subprocess.run(terminal_command, shell=True)

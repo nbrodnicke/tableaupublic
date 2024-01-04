@@ -238,7 +238,7 @@ SELECT "Group_1"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Dist
   "Group_2"."Requerentes (agrupados por porte) (grupo)" AS "Requerentes (agrupados por porte) (grupo)",
   COUNT("Extract"."Código Requerente") AS "cnt:Código Requerente:ok",
   (NOT ("t0"."$temp5_output" IS NULL)) AS "io:Federal/Estadual:nk",
-  DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
+  TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_2_A89E9A8A-57AF-43DC-8170-81D23E0EFC9F_5_Group" "Group_1" ON ("Extract"."Data da Distribuicao (BNDPJ) (Years)" IS NOT DISTINCT FROM "Group_1"."Data da Distribuicao (BNDPJ) (Years)")
   INNER JOIN "#Tableau_2_A89E9A8A-57AF-43DC-8170-81D23E0EFC9F_2_Group" "Group_2" ON ("Extract"."Requerente" IS NOT DISTINCT FROM "Group_2"."Requerentes (individualizados) (cópia)")
@@ -1806,7 +1806,7 @@ SELECT "Group_1"."Ato Impugnado (group) 1 (copy)" AS "Ato Impugnado (group) 1 (c
   "Group_2"."Data da Distribuicao (BNDPJ) (Years) (group)" AS "Data da Distribuicao (BNDPJ) (Years) (group)",
   SUM(1) AS "cnt:ADI (classe) (copy):ok",
   COUNT("Extract"."Ato Impugnado") AS "cnt:Ato Impugnado:ok",
-  DATE_TRUNC('YEAR', "Extract"."Data da Distribuicao (BNDPJ)"), "Extract"."Data da Distribuicao (BNDPJ)" AS "tyr:Data da Distribuicao (BNDPJ):ok"
+  TABLEAU.TO_DATETIME(DATE_TRUNC('YEAR', TABLEAU.NORMALIZE_DATETIME("Extract"."Data da Distribuicao (BNDPJ)")), "Extract"."Data da Distribuicao (BNDPJ)") AS "tyr:Data da Distribuicao (BNDPJ):ok"
 FROM "Extract"."Extract" "Extract"
   INNER JOIN "#Tableau_4_60418363-BE25-4784-BAB9-D39CFF344A17_6_Group" "Group_1" ON ("Extract"."Ato Impugnado" IS NOT DISTINCT FROM "Group_1"."Ato Impugnado")
   INNER JOIN "#Tableau_4_60418363-BE25-4784-BAB9-D39CFF344A17_11_Group" "Group_2" ON ("Extract"."Data da Distribuicao (BNDPJ) (Years)" IS NOT DISTINCT FROM "Group_2"."Data da Distribuicao (BNDPJ) (Years)")

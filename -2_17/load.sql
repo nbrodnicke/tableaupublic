@@ -1,4 +1,4 @@
-COPY "Extract"."Extract" FROM 'table_187329930 _copy_.csv' (format csv, delimiter '|', null '');
+COPY "Extract"."Extract" FROM '' (format csv, delimiter '|', null '');
 CREATE  TABLE "#Tableau_3_924D8C21-3EDE-4068-97D3-056DBB6F7D80_1_Group" AS
 SELECT "Extract"."answer" AS "mongo_profiles_raw_answer (group)",
   "Extract"."answer" AS "answer"
