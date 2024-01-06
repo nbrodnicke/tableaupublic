@@ -6,9 +6,35 @@ import glob
 import matplotlib.pyplot as plt
 import numpy as np
 
+def ascii_visualizer(l, directory):
+    for table_number, table_entry in enumerate(l):
+        table_directory = os.path.join(directory, f'table_{table_number + 1}')
+        if not os.path.exists(table_directory):
+            os.makedirs(table_directory)
+        tuple_count = table_entry[0]
+        datatype_dictionary = table_entry[1]
+        text_dictionary = datatype_dictionary.get('TEXT', None)
+        if text_dictionary is None:
+            break
+        occurrences_count = text_dictionary['occurrences']
+        pure_ascii_columns = text_dictionary['ASCII columns']
+        non_ascii_columns = occurrences_count - pure_ascii_columns
+        total_count = tuple_count * occurrences_count
+        non_ascii_count = text_dictionary['Non-ASCII count']
+        non_ascii_percentage = (non_ascii_count / total_count) * 100
+        plt.clf()
+        x_values = ['ASCII-Characters only', 'Non-ASCII Characters included']
+        y_values = [pure_ascii_columns, non_ascii_columns]
+        plt.bar(x_values, y_values, color='blue')
+        plt.xlabel('String-Columns divided by if they contain only ASCII-Characters')
+        plt.ylabel('Column Quantity')
+        plt.title(f"Table {table_number + 1} contains {total_count} Strings.\n {non_ascii_count} ({non_ascii_percentage:.2f}%) of those contain Non-ASCII Characters.")
+        target_file = os.path.join(table_directory, f'ascii.png')
+        plt.savefig(target_file)
+
 def string_visualizer(l, directory):
     for table_number, list_entry in enumerate(l):
-        str_directory = os.path.join(directory, f'Stringlengths_Table_{table_number + 1}')
+        str_directory = os.path.join(directory, f'table_{table_number + 1}', f'Stringlengths')
         if not os.path.exists(str_directory):
             os.makedirs(str_directory)
         greatest_strlen_overall = -1
@@ -27,7 +53,7 @@ def string_visualizer(l, directory):
                     greatest_strlen = greatest_item[0]
                     greatest_value = greatest_item[1]
                 except KeyError as e:
-                    print(f'Das Attribut {attribute} in Table {table_number} hat ausschliesslich null-values.')
+                    print(f'Das Attribut {attribute} in Table {table_number + 1} hat ausschliesslich null-values.')
                     not_just_null_values = False
             greatest_strlen_int = int(greatest_strlen)
 
@@ -68,6 +94,9 @@ def string_visualizer(l, directory):
 def datatypes_visualizer(list, directory):
     plt.clf()
     for table_number, table_entry in enumerate(list):
+        table_directory = os.path.join(directory, f'table_{table_number + 1}')
+        if not os.path.exists(table_directory):
+            os.makedirs(table_directory)
         tuple_count = int(table_entry[0])
         datatypes_count = len(table_entry[1])
         bottom = np.zeros(datatypes_count)
@@ -79,13 +108,12 @@ def datatypes_visualizer(list, directory):
         fig, ax = plt.subplots()
         datatypes = []
         for datatype, dictionary in table_entry[1].items():
-            print(f"Datatype: {datatype}.")
-            print(f"Dictionary: {dictionary}.")
-            datatypes.append(datatype)
             total_count = int(dictionary['occurrences']) * tuple_count
             null_count = int(dictionary['null-values'])
+            null_percentage = (null_count / total_count) * 100
             value_types["Not Null"] = np.append(value_types["Not Null"], total_count - null_count)
             value_types["Null"] = np.append(value_types["Null"], null_count)
+            datatypes.append(f"{datatype}\n{null_percentage:.1f}% null")
 
         for boolean, value_type in value_types.items():
             p = ax.bar(datatypes, value_type, width, label=boolean, bottom=bottom)
@@ -97,50 +125,41 @@ def datatypes_visualizer(list, directory):
             prozentwert = (wert / gesamtsumme) * 100
             plt.text(i, wert, f'{prozentwert:.1f}%', ha='center', va='bottom')
 
-        ax.set_title("Number of Values")
+        ax.text(0.5, 1.08, "Number of Values", transform=ax.transAxes, ha='center', fontsize=14)
         ax.legend(loc="upper right")
 
-        target_file = os.path.join(directory, f"table{table_number + 1}.png")
+        target_file = os.path.join(table_directory, f"datatypes.png")
 
         plt.savefig(target_file)
             
-
-
-def table_visualizer(list, directory):
+def tables_visualizer(list, directory):
     plt.clf()
-    workbook_categories = []
+    workbook_tables = []
     workbook_values = []
     workbook_column_counts = []
-    workbook_widths = []
-    workbook_value_counts = []
-
     for i, table_entry in enumerate(list):
-        column_count = 0
+        workbook_tables.append(f'{i + 1}')
         tuple_count = table_entry[0]
-        workbook_values.append(tuple_count)
+        column_count = 0
         for entry in table_entry[1].values():
             column_count += int(entry['occurrences'])
         workbook_column_counts.append(column_count)
-        workbook_categories.append(f"Table {i + 1}\n{column_count} Columns")
-        value_count = column_count * tuple_count
-        workbook_value_counts.append(value_count)
-
-    total_columns = sum(workbook_column_counts)
-    for count in workbook_column_counts:
-        width = count / total_columns
-        workbook_widths.append(width)
-
-    bars = plt.bar(workbook_categories, workbook_values, width=workbook_widths, color='blue')
-
-    for bar, value in zip(bars, workbook_value_counts):
-        plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() / 2, f"{value} Werte",
-                ha='center', va='center', rotation='vertical')
-
-    plt.title('Tabellen des Workbooks')
-    plt.ylabel('Anzahl Tupel')
-
-    target_file = os.path.join(directory, 'tables.png')
-
+        value_count = tuple_count * column_count
+        workbook_values.append(value_count)
+    plt.bar(workbook_tables, workbook_values, color='blue')
+    plt.xlabel('Table')
+    plt.ylabel('Total number of values')
+    plt.title('Number of total values per table')
+    target_file = os.path.join(directory, 'table_values.png')
+    plt.savefig(target_file)
+    plt.clf()
+    plt.bar(workbook_tables, workbook_column_counts, color='blue')
+    plt.xlabel('Table')
+    plt.ylabel('Number of Columns')
+    plt.title('Number of columns per table', y=1.08)
+    for i, column_count in enumerate(workbook_column_counts):
+        plt.text(i, column_count, f'{column_count}', ha='center', va='bottom')
+    target_file = os.path.join(directory, 'columns_per_table.png')
     plt.savefig(target_file)
 
 if len(sys.argv) > 1:
@@ -163,6 +182,7 @@ graphics_directory = os.path.join(workbook_directory, 'Graphics')
 if not os.path.exists(graphics_directory):
     os.makedirs(graphics_directory)
 
-# table_visualizer(table_list, graphics_directory)
-# datatypes_visualizer(table_list, graphics_directory)
+tables_visualizer(table_list, graphics_directory)
+datatypes_visualizer(table_list, graphics_directory)
 string_visualizer(table_list, graphics_directory)
+ascii_visualizer(table_list, graphics_directory)

@@ -10,8 +10,7 @@ if len(sys.argv) > 1:
     input_hyper_path = Path(sys.argv[1])
 
 table_list = []
-#   TODO: Das Objekt aufsetzen, in dem die gesamten Daten gespeichert werden
-#   TODO: Dann dieses Objekt mit Daten füttern, indem ich auf allen Hyper-Files (und ggf. .sql-Files) analysiere, was abgeht
+
 def fix_column_type(column_type: str):
     if str(column_type) == 'BIG_INT':
         return 'BIGINT'
@@ -64,7 +63,7 @@ def analyze_hyper_file(hyper_database):
                 except Exception as e:
                     print("Query failed!")
                     print(e)
-                    return 42 # Hier gegebenenfalls einen Fallback programmieren, der manuell schaut, wie viele Null-Werte es gibt
+                    return 42 # Das hier nochmal refactorn
                 l.append(new_list_element)
             return l
 
@@ -96,8 +95,8 @@ for entry in os.listdir(new_directory_path):
         elif not full_path.lower().endswith('.sql') and not full_path.lower().endswith('.csv'):
             os.remove(full_path)
 
-print(table_list)
-
 json_file = Path(os.path.join(new_directory_path, 'analysis.json'))
 with open(json_file, 'w') as file:
     json.dump(table_list, file)
+
+subprocess.run(["python3", "single_workbook_visualizer.py", new_directory_path])
